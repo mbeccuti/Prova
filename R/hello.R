@@ -10,5 +10,5 @@
 #' @import deSolve
 #' @export
 add <- function(x, y) {
-  x-y+2*x
+  -y+2*x
 }
