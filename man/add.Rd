@@ -19,5 +19,6 @@ Add together two numbers.
 }
 \examples{
 add(1, 1)
-add(10, 1)
+add(10, 11)
+add(3,4)
 }

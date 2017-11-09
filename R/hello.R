@@ -6,7 +6,7 @@
 #' @examples
 #' add(1, 1)
 #' add(10, 11)
-#' add(3,4)
+#' add(3,47)
 #' @import deSolve
 #' @export
 add <- function(x, y) {
