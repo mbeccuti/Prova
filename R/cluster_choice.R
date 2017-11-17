@@ -8,8 +8,8 @@
 #' @examples
 #'
 #' path <-".../1864_no_P7.csv"
-#' Nmice<-24
-#' database <- creazionedati(path,Nmice,tr.day)
+#' number_curves<-24
+#' database <- creazionedati(path,number_curves,tr.day)
 #' K<-c(4,5,6)
 #' H<-c(1,2)
 #' Cluster_choice(database,K,H)
