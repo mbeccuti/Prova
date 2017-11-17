@@ -1,4 +1,5 @@
-
+#' Create a time grid plot, that represents.....
+#'
 #' @param Times A matrix with the times in the second column and the curve relative in the first one.
 #' @param number_curves Number of the curves.
 #' @param length Vector in which the i-component represents how many observation times the i-curve has.
@@ -14,9 +15,7 @@
 #' length<-dati$length
 #' time.grid(times,number_curves,length)
 #'
-#' @import
 #' @export
-
 Create.TimeGrid<-function(times,number_curves,length,save="False")
 {
   coordinates<-matrix(0,nrow =length%*%length,ncol = 2)
