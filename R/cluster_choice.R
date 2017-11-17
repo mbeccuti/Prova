@@ -5,7 +5,7 @@
 #' @param K A vector with the cluster that you want consider.
 #' @param H A vector with the space dimensions h that you want consider.
 #' @return The matrixes in which are stored the AIC and Bic values for each model,
-#'         and a list with the output of the Functional Clustering with the different inputs.
+#'         and a list with the outputs of the FCM with the different inputs.
 #' @examples
 #'
 #' path <-".../1864_no_P7.csv"
