@@ -1,11 +1,8 @@
 #' PCA barplot
+#' Plots PCA barplot for a given dataset of tumor growth curves.
 #'
-#' Plot PCA barplot for a given dataset of tumor growth curves.
-#' Columns dataset are: ID, volume and time measures for each curve.
-#' print equal TRUE save the plot.
-#'
-#' @param dataset A data.frame.
-#' @param print A logical constant.
+#' @param dataset A data.frame with 3 variables:ID, volume and time measures for each curve.
+#' @param print A logical constant. If FALSE (the default) the PCA barplot is only shown, otherwise the plot is saved in a PDF file.
 #' @return The variances against the number of the principal component are plotted.
 #' @examples
 #' @import fda
