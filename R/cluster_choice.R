@@ -10,11 +10,13 @@
 #'
 #' path <-".../1864_no_P7.csv"
 #' number_curves<-24
+#' tr.day<-60
 #' database <- creazionedati(path,number_curves,tr.day)
 #' K<-c(4,5,6)
 #' H<-c(1,2)
 #' Cluster_choice(database,K,H)
 #'
+#' @import funcy
 #' @export
 Cluster_choice<-function(database,K,H)
 {
@@ -41,5 +43,5 @@ Cluster_choice<-function(database,K,H)
     output_k[[paste("k=",k)]]<-output_h
   }
 
-  return(list(output_k,matrix_BIC,matrix_AIC))
+  return(list(CONNECTOR_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC))
 }
