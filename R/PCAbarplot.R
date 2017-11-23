@@ -8,7 +8,7 @@
 #' @export
 PCAbarplot <- function(dataset,print=FALSE)
 {
-library(fda)
+
 TimeGrid <- 1:max(dataset$time)
 res <- makeCoeffs(data=dataset, reg=FALSE, dimBase=5,
                   grid=TimeGrid, pert=0.01,
