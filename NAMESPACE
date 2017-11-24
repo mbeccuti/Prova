@@ -2,8 +2,8 @@
 
 export(Cluster_choice)
 export(Create.TimeGrid)
-export(DataInfo)
 export(DataStructure)
+export(DataTrunc)
 export(PCAbarplot)
 export(Residuals)
 export(add)
