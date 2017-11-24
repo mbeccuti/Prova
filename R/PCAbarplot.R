@@ -2,22 +2,21 @@
 #'
 #' Add a dataset of ID, vol and time measures and choose to save or not the PCA bar plot.
 #'
-#' @param dataset A data frame.
+#' @param data.matrix A matrix with 3 columns: curve ID, volume and time measures.
 #' @param save A logical constant.
 #' @return The plot of the variances against the number of the principal component.
 #' @examples
 #' @import fda
 #' @export
-PCAbarplot <- function(dataset,save=FALSE)
+PCAbarplot <- function(data.matrix,save=FALSE)
 {
  library(fda)
 
- TimeGrid <- 1:max(dataset$time)
+ TimeGrid <- 1:max(data.matrix[,3])
 
  # curves splines basis coefficients
- res <- makeCoeffs(data=dataset, reg=FALSE, dimBase=5,
-                   grid=TimeGrid, pert=0.01,
-                   baseType="splines")
+ res <- makeCoeffs(data=data.matrix, reg=FALSE, dimBase=5,
+                   grid=TimeGrid, pert=0.01)
 
  # Principal Components Analysis
 
