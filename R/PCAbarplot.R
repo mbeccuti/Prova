@@ -1,37 +1,51 @@
-#' Add a dataset of ID, vol and time measures and choose to save or not the PCA barplot.
+#' Principal Components Analysis bar plot
+#'
+#' Add a dataset of ID, vol and time measures and choose to save or not the PCA bar plot.
 #'
 #' @param dataset A data frame.
-#' @param print A logical constant.
+#' @param save A logical constant.
 #' @return The plot of the variances against the number of the principal component.
 #' @examples
 #' @import fda
 #' @export
-PCAbarplot <- function(dataset,print=FALSE)
+PCAbarplot <- function(dataset,save=FALSE)
 {
-library(fda)
-TimeGrid <- 1:max(dataset$time)
-res <- makeCoeffs(data=dataset, reg=FALSE, dimBase=5,
-                  grid=TimeGrid, pert=0.01,
-                  baseType="splines")
-princomp(as.matrix(res$coeffs)) -> pca
-ncomp <- length(names(pca$sdev))
-eigs <- pca$sdev^2
-percentage <- eigs/sum(eigs)*100
-windows()
-screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
-text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
-if(print==TRUE)
-{
-Sys.sleep(3)
-dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
-dev.off()
-}
-}
+ library(fda)
 
-makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert, baseType){
+ TimeGrid <- 1:max(dataset$time)
+
+ # curves splines basis coefficients
+ res <- makeCoeffs(data=dataset, reg=FALSE, dimBase=5,
+                   grid=TimeGrid, pert=0.01,
+                   baseType="splines")
+
+ # Principal Components Analysis
+
+   princomp(as.matrix(res$coeffs)) -> pca
+   # Number of principal components
+   ncomp <- length(names(pca$sdev))
+   # Principal components variances
+   eigs <- pca$sdev^2
+   # Percentage of variances explained by each component
+   percentage <- eigs/sum(eigs)*100
+
+   # PCA bar plot
+   windows()
+   screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
+   text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
+   if(save==TRUE)
+   {
+   Sys.sleep(3)
+   dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
+   dev.off()
+   }
+  }
+
+# makeCoeffs function returns the data coefficients with respect to a base type chosen
+makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert){
 
     if(is.null(base)){
-        tempBase <- makeBasis(baseType, grid, dimBase)$phi
+        tempBase <- makeBasis(grid, dimBase)$phi
         base <- svd(tempBase)$u
     }else{
         base <- base[,1:dimBase]
@@ -62,15 +76,12 @@ makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert, baseType)
     return(list(coeffs=coeffs, base=base, fullBase=fullBase, dimBase=dimBase))
 }
 
-makeBasis <- function(basis, time, nbasis){
+# makeBasis function returns a splines basis, chosen a time grid and a basis dimension
+makeBasis <- function(time, nbasis){
     m <- length(time)
-    switch(basis,
-           "splines"={
-               bObj <-  create.bspline.irregular(c(time[1],time[m]),
+    bObj <-  create.bspline.irregular(c(time[1],time[m]),
                                                  nbasis=nbasis,
                                                  norder=min(nbasis, 4))
-           }
-           )
     phi <- eval.basis(time, bObj)
     return(list(bObj=bObj, phi=phi))
 }
