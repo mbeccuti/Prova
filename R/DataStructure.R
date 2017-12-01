@@ -1,26 +1,32 @@
 #' Data structure for package name
 #'
-#' Create dataset reading .csv file with times and volume data.
+#' Create curve dataset
 #'
-#' @param filename .csv file name with file path
-#' @param samplesize An integer for the number of the growth curves.
+#' @param file1 .xls file name with volume and time values
+#' @param file2 .txt file name with curve labels
 #' @return A list with 3 arguments: a matrix with 3 columns (ID curves, volume and times value), curves lengths and the grid of overall observation times.
 #' @examples
 #' @export
-DataStructure <- function(filename,samplesize) {
+DataStructure <- function(file1,file2) {
 
   #Read file with times and volume data
-  dataset <- scan(file=filename,skip=1,sep=',')
+  library(readxl)
+
+  dataset <- read_xls("1864_dataset.xls",col_names=T)
 
   # Inizialize :
   # vector for curves lenghts
+  nvar <- dim(dataset)[2]
+  nobs <- dim(dataset)[1]
+  tot <- nobs*nvar
+  samplesize <- dim(dataset)[2]/2
   lencurv <- numeric(samplesize)
   # vectors for times, volume and ID curves values
   tot <- length(dataset)
-  TimeIndex <- seq(2*samplesize+1,tot,2)
-  VolIndex  <- seq(2*samplesize+2,tot,2)
-  TimeValue   <- matrix(data=dataset[TimeIndex],ncol=samplesize,byrow=TRUE)
-  VolValue <- matrix(data=dataset[VolIndex],ncol=samplesize,byrow=TRUE)
+  TimeIndex <- seq(1,nvar,2)
+  VolIndex  <- seq(2,nvar,2)
+  TimeValue   <- as.matrix(dataset[TimeIndex])
+  VolValue <- as.matrix(dataset[VolIndex])
 
   times <- numeric(tot)
   vol <- numeric(tot)
@@ -51,14 +57,18 @@ DataStructure <- function(filename,samplesize) {
     }
   }
 
-  ndata   <- sum(lencurv) # effective number of overall observation without NA
-  vol     <- vol[1:ndata]
-  times   <- times[1:ndata]
-  curves  <- curves[1:ndata]
+  ndata    <- sum(lencurv) # effective number of overall observation without NA
+  vol      <- vol[1:ndata]
+  times    <- times[1:ndata]
+  curves   <- curves[1:ndata]
   timegrid <- 1:max(times)
 
-  mdata <- cbind(curves,vol,times)
+  # ID, volume and time matrix
+  mdata    <- cbind(curves,vol,times)
   colnames(mdata) <- c("ID","Vol","Time")
 
-  return(dataset=list(data.matrix=mdata,LenCurv=lencurv,TimeGrid=timegrid))
+  #
+  labcurv  <- read.csv(file=file2,header=TRUE)
+
+  return(dataset=list(data.matrix=mdata,LenCurv=lencurv,Labels=labcurv,TimeGrid=timegrid))
 }
