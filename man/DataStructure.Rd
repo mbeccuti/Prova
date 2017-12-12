@@ -12,7 +12,7 @@ DataStructure(file1, file2)
 \item{file2}{.txt file name with curve labels}
 }
 \value{
-A list with 3 arguments: a matrix with 3 columns (ID curves, volume and times value), curves lengths and the grid of overall observation times.
+A list with 4 arguments: a data frame with 3 variables (ID curves, volume and times value), a vector for curves lengths, a data frame with curves labeled according to target file features and a vector for overall time grid.
 }
 \description{
 Create curve dataset
