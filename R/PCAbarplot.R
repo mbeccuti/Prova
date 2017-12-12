@@ -2,7 +2,7 @@
 #'
 #' Add a dataset of ID, vol and time measures and choose to save or not the PCA bar plot.
 #'
-#' @param data.matrix A matrix with 3 columns: curve ID, volume and time measures.
+#' @param data.matrix A matrix with 3 columns: curve ID, time measures and volume.
 #' @param save A logical constant.
 #' @return The plot of the variances against the number of the principal component.
 #' @examples
@@ -29,15 +29,24 @@ PCAbarplot <- function(data.matrix,save=FALSE)
    percentage <- eigs/sum(eigs)*100
 
    # PCA bar plot
-   windows()
-   screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
-   text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
+    PCA_barplot<-ggplot(data=data.frame(comp=paste("Comp.",1:ncomp),Variances=eigs,perc=paste(signif(percentage,4),"%",sep="")), aes(x=comp, y=Variances)) +
+                    geom_bar(stat="identity", fill="steelblue")+
+                    geom_text(aes(label=perc), vjust=-.3,  size=3.5)+
+                    labs(title="PCA barplot", x="Components", y = "Variances")+
+                    theme(plot.title = element_text(hjust = 0.5))
+
+   # windows()
+   # screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
+   # text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
    if(save==TRUE)
    {
-   Sys.sleep(3)
-   dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
-   dev.off()
+     pdf(file=paste("PCAbarplot.pdf"),paper="a4r",width=11)
+
+   # Sys.sleep(3)
+   # dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
+     dev.off()
    }
+   return(list(plot=PCA_barplot,perc=percentage))
   }
 
 # makeCoeffs function returns the data coefficients with respect to a base type chosen

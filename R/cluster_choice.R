@@ -18,8 +18,14 @@
 #'
 #' @import funcy
 #' @export
-Cluster_choice<-function(database,K,H)
+Cluster_choice<-function(database.tr,K,h=NULL,output_PCA)
 {
+
+  if(h==NULL)
+  {
+    h<-which(cumsum(output_PCA$perc)>95)[1]
+  }
+  H<-1:h
 
   output_k<-list()
   row_names <-c(paste("k=",K))
@@ -29,16 +35,40 @@ Cluster_choice<-function(database,K,H)
 
   # return a list of K lists, in which is is stored the output for all h
   # We also create two matrixes with the BIC and AIC values
+  data.funcit <-matrix(c(database.tr$data.matrixtr$ID,database.tr$data.matrixtr$Vol,database.tr$data.matrixtr$Time),ncol=3,byrow=F)
+
   for(k in K)
   {
     output_h<-list()
     for(h in H)
     {
-      data.funcit <-matrix(c(database$curve.tr,database$x.tr,database$time.tr),ncol=3,byrow=F)
       mycontfclust = new("funcyCtrl",baseType="splines",dimBase=5,init="kmeans",nrep=10,redDim=h)
-      output_h[[paste("h=",h)]]<- funcit(data.funcit,seed=2404,k,methods="fitfclust",funcyCtrl=mycontfclust,save.data=TRUE)
+      out.funcit<-output_h[[paste("h=",h)]]<- funcit(data.funcit,seed=2404,k,methods="fitfclust",funcyCtrl=mycontfclust,save.data=TRUE)
       matrix_BIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@BIC
       matrix_AIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@AIC
+      #### Meancurve
+      Cluster() -> classes
+      out.funcit@models$fitfclust@fit -> out.fit
+      fitfclust.curvepredIrreg(out.fit)$meancurves -> meancurves
+      classificate <- rep(classes,database.tr$LenCurv.tr)
+      #colori <- rep(dati$generazione,dati$lunghezze)
+      curves <- matrix(c(classificate,database.tr$data.matrixtr$Time,database.tr$data.matrixtr$ID,database.tr$data.matrixtr$Vol),ncol=4)
+      time <- sort(unique(database.tr$data.matrixtr$Time))
+      grid <- 1:max(database.tr$data.matrixtr$Time)
+      ###################DA FINIRE I PLOTS ###################################
+      for(i in c(1:K))
+      {
+        #windows()
+        curves.i <- curves[curves[,1]==i,]
+        #meancurve<- meancurves[,i] [meancurves[,i] <= max(curves.i[,3])]
+        index <- unique(curves.i[,4]) # curve nella classe i
+        ni <- length(index)
+        colori.i <- colori[index]
+        temp <- sort(unique(curves[,2][curves[,1]==i]))
+        meancurve <- meancurves[,i][time <= max(temp)]
+        t <- time[time <= max(temp)]
+        ggplot(data = data.frame(time=t,))
+        plot(t,meancurve,xlab='Days', ylab='Volume',type="l",col="black", xlim=c(min(grid),max(grid)+40),ylim=c(min(dati$x.tr),1600),cex=3,lwd=2.5,main=paste("Cluster ",simboli.classi[i],sep=""))
     }
     output_k[[paste("k=",k)]]<-output_h
   }

@@ -7,8 +7,9 @@
 #' @return A list of 2 arguments: the matrix of truncated data and the vector of truncated curves lengths
 #' @examples
 #' @export
-DataTrunc <- function(dataset,truncTime=NULL)
-{  mdata <- dataset$data.matrix
+DataTrunc <- function(data,truncTime=NULL)
+{
+   mdata <- data$Dataset
    sample.size <- max(unique(mdata[,1]))
    lengths.tr <- numeric(sample.size)
   if(!is.null(truncTime))
