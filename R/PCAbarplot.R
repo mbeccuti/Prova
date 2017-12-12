@@ -21,6 +21,7 @@ PCAbarplot <- function(data.matrix,save=FALSE)
  # Principal Components Analysis
 
    princomp(as.matrix(res$coeffs)) -> pca
+   print(pca$loadings)
    # Number of principal components
    ncomp <- length(names(pca$sdev))
    # Principal components variances

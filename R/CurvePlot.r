@@ -32,4 +32,4 @@ CurvePlot <- function(dataset)
    }
 #  if (UserChoice=="Yes") ggsave("D:/ITH_pacchetto/GrowthCurve.pdf",paper="a4r",width=11)
   
-
+# deve restituire plot e aggiornare la lista

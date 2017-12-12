@@ -11,6 +11,6 @@
 DataGlance <- function(datafile,targetfile)
 {
 datasetinfo <- DataStructure(datafile,targetfile) 
-p <- CurvePlot(datasetinfo)
+CurvePlot(datasetinfo)
 return(datasetinfo)
 }

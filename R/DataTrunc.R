@@ -2,7 +2,7 @@
 #'
 #' List of information on the truncated tumor growth curves
 #'
-#' @param data A list with 3 arguments : the DataStruncture() output list.
+#' @param data A list with 4 arguments : the DataStruncture() output list.
 #' @param truncTime An integer corresponding to the time at which truncate the curves. (Create.TimeGrid() output suggests suitable candidate)
 #' @return A list of 2 arguments: the matrix of truncated data and the vector of truncated curves lengths
 #' @examples
