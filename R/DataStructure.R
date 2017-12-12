@@ -68,8 +68,10 @@ DataStructure <- function(file1,file2) {
   labcurv  <- read.csv(file=file2,header=TRUE)
 
   # ID, volume and time data frame
+
   dataset <- data.frame(ID=ID,Time=times,Vol=vol)
   alldata <- list(Dataset=dataset,LenCurv=lencurv,LabCurv=labcurv,TimeGrid=timegrid)
+
 
   return(alldata)
 }
