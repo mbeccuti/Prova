@@ -7,7 +7,7 @@
 #' @return A list with 4 arguments: a data frame with 3 variables (ID curves, volume and times value), a vector for curves lengths, a data frame with curves labeled according to target file features and a vector for overall time grid.
 #' @examples
 #' @import readxl
-#' @export 
+#' @export
 DataStructure <- function(file1,file2) {
 
   #Read Data File
@@ -66,7 +66,7 @@ DataStructure <- function(file1,file2) {
 
   # Read Target File
   labcurv  <- read.csv(file=file2,header=TRUE)
-  
+
   # ID, volume and time data frame
   dataset <- data.frame(ID=ID,Time=times,Vol=vol)
   alldata <- list(Dataset=dataset,LenCurv=lencurv,LabCurv=labcurv,TimeGrid=timegrid)
