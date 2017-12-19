@@ -12,33 +12,41 @@ PCAbarplot <- function(data.matrix,save=FALSE)
 {
  library(fda)
 
- TimeGrid <- 1:max(data.matrix[,3])
+  TimeGrid <- 1:max(data.matrix[,3])
 
- # curves splines basis coefficients
- res <- makeCoeffs(data=data.matrix, reg=FALSE, dimBase=5,
-                   grid=TimeGrid, pert=0.01)
+  # curves splines basis coefficients
+  res <- makeCoeffs(data=data.matrix, reg=FALSE, dimBase=5,
+                    grid=TimeGrid, pert=0.01)
 
- # Principal Components Analysis
+  # Principal Components Analysis
 
-   princomp(as.matrix(res$coeffs)) -> pca
-   print(pca$loadings)
-   # Number of principal components
-   ncomp <- length(names(pca$sdev))
-   # Principal components variances
-   eigs <- pca$sdev^2
-   # Percentage of variances explained by each component
-   percentage <- eigs/sum(eigs)*100
+  princomp(as.matrix(res$coeffs)) -> pca
+  # Number of principal components
+  ncomp <- length(names(pca$sdev))
+  # Principal components variances
+  eigs <- pca$sdev^2
+  # Percentage of variances explained by each component
+  percentage <- eigs/sum(eigs)*100
 
-   # PCA bar plot
-   windows()
-   screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
-   text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
-   if(save==TRUE)
-   {
-   Sys.sleep(3)
-   dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
-   dev.off()
-   }
+  # PCA bar plot
+  PCA_barplot<-ggplot(data=data.frame(comp=paste("Comp.",1:ncomp),Variances=eigs,perc=paste(signif(percentage,4),"%",sep="")), aes(x=comp, y=Variances)) +
+    geom_bar(stat="identity", fill="steelblue")+
+    geom_text(aes(label=perc), vjust=-.3,  size=3.5)+
+    labs(title="PCA barplot", x="Components", y = "Variances")+
+    theme(plot.title = element_text(hjust = 0.5))
+
+  # windows()
+  # screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
+  # text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
+  if(save==TRUE)
+  {
+    pdf(file=paste("PCAbarplot.pdf"),paper="a4r",width=11)
+
+    # Sys.sleep(3)
+    # dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
+    dev.off()
+  }
+  return(list(plot=PCA_barplot,perc=percentage))
   }
 
 # makeCoeffs function returns the data coefficients with respect to a base type chosen

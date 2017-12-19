@@ -69,7 +69,7 @@ DataStructure <- function(file1,file2) {
 
   # ID, volume and time data frame
 
-  dataset <- data.frame(ID=ID,Time=times,Vol=vol)
+  dataset <- data.frame(ID=ID,Vol=vol,Time=times)
   alldata <- list(Dataset=dataset,LenCurv=lencurv,LabCurv=labcurv,TimeGrid=timegrid)
 
 
