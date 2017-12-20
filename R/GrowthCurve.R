@@ -2,16 +2,14 @@
 #'
 #' Plot tumor growth curves
 #'
-#' @param alldata list DataStructure() output
-#' @param feature string for feature name to plot curves according to
-#' @param save logic save equal to TRUE save growth curves in a pdf file (default save=FALSE)
-#' @param path string path for saving pdf file if save equal to TRUE (default path=NULL)
-#' @return plot growth curves and enriches DataStructure() output with feature colour palette
+#' @param alldata list DataImport() output
+#' @param feature string feature name to plot curves according to
+#' @return GrowthCurve.ls list with growth curves plot and DataImport() output enriched by feature colour palette
 #' @examples
 #' @import ggplot2
 #' @export
 
-GrowthCurve <- function(alldata,feature,save=FALSE,path=NULL)
+GrowthCurve <- function(alldata,feature)
 { 
   ### library
   library(ggplot2)
@@ -29,15 +27,10 @@ GrowthCurve <- function(alldata,feature,save=FALSE,path=NULL)
   labs(title="Tumor growth curves",x="Time", y = "Volume",col=feature) 
   GrowthCurve + scale_colour_manual(values = feature.palette)
   
-  ### Save plot
-  if(save==TRUE)
-  {
-   if(!is.null(path)) ggsave(file = paste(path,"GrowthCurve.pdf",sep=""),paper="a4r",width=11)
-   else print("set a path for saving growth curves plot")
-  }
-  
   ### Enrich alldata with colour palette
   alldata$PalColour <- feature.palette
   
-  return(alldata)
+  GrowthCurve.ls <- list(GrowthCurve_plot=GrowthCurve,alldata=alldata)
+  
+  return( GrowthCurve.ls )
 }
