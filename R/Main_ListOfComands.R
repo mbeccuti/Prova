@@ -15,7 +15,7 @@ dati.tr<-DataTrunc(dati,60)
 
 source("R/PCAbarplot.R")
 
-pca<-PCAbarplot(dati.tr$data.matrixtr,save=TRUE)
+#pca<-PCAbarplot(dati.tr$data.matrixtr,save=TRUE)
 
 source("R/cluster_choice.R")
 
