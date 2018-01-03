@@ -1,6 +1,6 @@
 library("funcy")
 library("grDevices")
-
+library(ggplot2)
 
 file1<-"data/1864dataset.xls"
 file2<-"data/1864info.txt"
@@ -9,13 +9,13 @@ source("R/DataImport.R")
 
 dati<-DataImport(file1,file2)
 
-source("R/DataTrunc.R")
+source("R/DataTruncJ.R")
 
-dati.tr<-DataTrunc(dati,60)
+dati.tr<-DataTrunc(dati,truncTime=60)
 
 source("R/PCAbarplot.R")
 
-#pca<-PCAbarplot(dati.tr$data.matrixtr,save=TRUE)
+pca<-PCAbarplot(dati.tr$Dataset,save=TRUE)
 
 source("R/cluster_choice.R")
 
