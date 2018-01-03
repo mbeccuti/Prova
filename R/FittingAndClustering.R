@@ -13,7 +13,7 @@
 
 
 
-FittingAndClustering<-function(databaseTr,h,k,FCM_all,Info)
+FittingAndClustering<-function(databaseTr,h,k,FCM_all,Info,save=FALSE)
 {
   out<-list()
   out.funcit <-FCM_all[[paste("k=",k)]][[paste("h=",h)]]
@@ -22,6 +22,12 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,Info)
   {
     out[[paste(i)]]<-ClusterWithMeanCurve_plot(out.funcit,databaseTr,Info =paste(Info), k,All = TRUE,i)
 
+  }
+  mcurves<-list(out$FCM$plotMeanCurve,out$Malthus$plotMeanCurve,out$Gompertz$plotMeanCurve,out$Logistic$plotMeanCurve)
+  out$MeanCurves<-plot_grid(plotlist = mcurves)
+  if(save==TRUE)
+  {
+    ggsave(MeanCurves,plot =out$MeanCurves )
   }
   return(out)
 }

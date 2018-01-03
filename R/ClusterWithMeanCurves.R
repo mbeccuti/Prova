@@ -39,7 +39,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
 
 
   plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))
-  PlotMeanCurveFCM<-ggplot()+
+  PlotMeanCurve<-ggplot()+
                     geom_line(data=plot_data, aes(x=time,y=means,group=clusters) )+
                     labs(title=paste(model," cluster mean curves"), x="Days", y = "Volume")+
                     theme(plot.title = element_text(hjust = 0.5))
@@ -61,7 +61,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
      plots[["ALL"]]<-plot_grid(plotlist = plots)
      plots$ALL
   }
- return(list(plotMeanCurve=PlotMeanCurveFCM,plotsCluster=plots,Informations=Informations))
+ return(list(plotMeanCurve=PlotMeanCurve,plotsCluster=plots,Informations=Informations))
 }
 
 

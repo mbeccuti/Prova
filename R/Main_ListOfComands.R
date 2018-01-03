@@ -1,5 +1,6 @@
 library("funcy")
 library("grDevices")
+library("ggplot2")
 
 
 file1<-"data/1864dataset.xls"
@@ -28,5 +29,7 @@ FCMplots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,Info = "Prog
 
 MalthusPlots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,Info = "Progeny",k = 4,All = TRUE,"Malthus")
 
+source("R/FittingAndClustering.R")
 
+ciao<-FittingAndClustering(databaseTr = dati.tr, h = 2, k=4,FCM_all = out$FCM_all, Info = "Progeny")
 
