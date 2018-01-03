@@ -10,17 +10,17 @@ source("R/DataImport.R")
 
 dati<-DataImport(file1,file2)
 
-source("R/DataTrunc.R")
+source("R/DataTruncJ.R")
 
-dati.tr<-DataTrunc(dati,60)
+dati.tr<-DataTrunc(dati,truncTime=60)
 
 source("R/PCAbarplot.R")
 
-pca<-PCAbarplot(dati.tr$data.matrixtr,save=TRUE)
+pca<-PCAbarplot(dati.tr$Dataset,save=TRUE)
 
 source("R/cluster_choice.R")
 
-out<-Cluster_choice(dati.tr,K=4,h=NULL,pca$perc)
+out<-Cluster_choice(dati.tr$Dataset,K=4,h=NULL,pca$perc)
 
 source("R/ClusterWithMeanCurves.R")
 out.funcit <-out$FCM_all$`k= 4`$`h= 2`
@@ -32,4 +32,19 @@ MalthusPlots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,Info = "
 source("R/FittingAndClustering.R")
 
 ciao<-FittingAndClustering(databaseTr = dati.tr, h = 2, k=4,FCM_all = out$FCM_all, Info = "Progeny")
+
+source("R/haus.R")
+source("R/cluster.symbol.R")
+
+### Withness
+source("R/WithnessInternal.R")
+K <- 4
+ClustCurve <- FCMplots$Informations$ClustCurve
+MeanCurves <- FCMplots$Informations$meancurves
+ClustSymbol<-cluster.symbol(K)
+source("R/Withness.R")
+Withness(ClustSymbol,ClustCurve,MeanCurves,K,centroids=FALSE)
+
+### Betweenness
+source("R/BetweennessInternal.R")
 

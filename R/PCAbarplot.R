@@ -12,7 +12,7 @@ PCAbarplot <- function(data.matrix,save=FALSE)
 {
  library(fda)
 
-  TimeGrid <- 1:max(data.matrix[,3])
+  TimeGrid <- c(1:max(data.matrix[,3]))
 
   # curves splines basis coefficients
   res <- makeCoeffs(data=data.matrix, reg=FALSE, dimBase=5,
@@ -40,7 +40,7 @@ PCAbarplot <- function(data.matrix,save=FALSE)
   # text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
   if(save==TRUE)
   {
-    pdf(file=paste("PCAbarplot.pdf"),paper="a4r",width=11)
+    pdf(file="PCAbarplot.pdf",paper="a4r",width=11)
 
     # Sys.sleep(3)
     # dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)

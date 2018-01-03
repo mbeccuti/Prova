@@ -18,10 +18,10 @@ clustering<- function(databaseTr,k,model)
 {
 
   databaseTr->dati
-  time <- dati$data.matrixtr$Time
+  time <- dati$Dataset$Time
   t <- sort(unique(time))
-  x <- dati$data.matrixtr$Vol
-  curve <- dati$data.matrixtr$ID
+  x <- dati$Dataset$Vol
+  curve <- dati$Dataset$ID
   number_curves<-max(curve)
 
   data.fit <- matrix(c(curve,x,time),ncol=3,byrow=F)

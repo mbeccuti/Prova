@@ -35,7 +35,7 @@ Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc)
   matrix_BIC<-matrix(0,nrow = length(K),ncol = length(H),dimnames=list(row_names,col_names))
 
 
-  data.funcit <-matrix(c(databaseTr$data.matrixtr$ID,databaseTr$data.matrixtr$Vol,databaseTr$data.matrixtr$Time),ncol=3,byrow=F)
+  data.funcit <-matrix(c(databaseTr$ID,databaseTr$Vol,databaseTr$Time),ncol=3,byrow=F)
 
   # return a list of K lists, in which is is stored the output for all h
   # We also create two matrixes with the BIC and AIC values
