@@ -3,7 +3,7 @@
 #'
 #' @param
 #' @param
-#' @return
+#' @return ...ClustCurve è utilizzato nelle funzioni che calcolano withness and betweenness
 #' @examples
 #'
 #'
@@ -35,7 +35,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
     classification$meancurves->meancurves->Informations$meancurves
   }
   classificate <- rep(classes,databaseTr$LenCurv)
-  curves <- data.frame(Cluster=classificate,Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Info=rep(databaseTr$LabCurv$Progeny,databaseTr$LenCurv))
+  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv$Progeny,databaseTr$LenCurv))
 
 
   plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))
@@ -61,7 +61,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
      plots[["ALL"]]<-plot_grid(plotlist = plots)
      plots$ALL
   }
- return(list(plotMeanCurve=PlotMeanCurveFCM,plotsCluster=plots,Informations=Informations))
+ return(list(plotMeanCurve=PlotMeanCurveFCM,plotsCluster=plots,Informations=Informations,ClustCurve=curves[,1:4]))
 }
 
 
