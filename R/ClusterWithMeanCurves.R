@@ -1,4 +1,4 @@
-#
+#  Progeny deve diventare un parametro, potremmo chiamarlo feature
 #'
 #'
 #' @param
@@ -20,7 +20,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
 
   symbols<- c("circle", "triangle","cross","times","diamond","reverse triangle","square cross","star","diamond", "plus","circle plus","triangles up and down","square plus","circle cross","square and triangle down","filled square","filled circle","filled triangle point-up","filled diamond","solid circle","bullet")
   Informations<-list()
-  time <- sort(unique(databaseTr$data.matrixtr$Time))
+  time <- sort(unique(databaseTr$Dataset$Time))
 
   if(model=="FCM")
   {
@@ -34,8 +34,8 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
     classification$center -> Informations$center
     classification$meancurves->meancurves->Informations$meancurves
   }
-  classificate <- rep(classes,databaseTr$LenCurv.tr)
-  curves <- data.frame(Cluster=classificate,Times=databaseTr$data.matrixtr$Time,Vol=databaseTr$data.matrixtr$Vol,ID=databaseTr$data.matrixtr$ID,Info=rep(databaseTr$LabCurv$Progeny,databaseTr$LenCurv.tr))
+  classificate <- rep(classes,databaseTr$LenCurv)
+  curves <- data.frame(Cluster=classificate,Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Info=rep(databaseTr$LabCurv$Progeny,databaseTr$LenCurv))
 
 
   plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))

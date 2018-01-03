@@ -19,7 +19,7 @@ pca<-PCAbarplot(dati.tr$Dataset,save=TRUE)
 
 source("R/cluster_choice.R")
 
-out<-Cluster_choice(dati.tr,K=4,h=NULL,pca$perc)
+out<-Cluster_choice(dati.tr$Dataset,K=4,h=NULL,pca$perc)
 
 source("R/ClusterWithMeanCurves.R")
 out.funcit <-out$FCM_all$`k= 4`$`h= 2`
