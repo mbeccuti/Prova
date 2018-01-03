@@ -52,5 +52,5 @@ Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc)
     output_k[[paste("k=",k)]]<-output_h
   }
 
-  return(list(CONNECTOR_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC))
+  return(list(FCM_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC))
 }
