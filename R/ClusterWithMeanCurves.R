@@ -14,11 +14,12 @@ library("cowplot")
 source("R/fitfclust.R")
 source("R/Residuals.R")
 source("R/Clustering.R")
+source("R/cluster.symbol.R")
 
-ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model)
+ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,feature,k,All=FALSE,model)
 {
 
-  symbols<- c("circle", "triangle","cross","times","diamond","reverse triangle","square cross","star","diamond", "plus","circle plus","triangles up and down","square plus","circle cross","square and triangle down","filled square","filled circle","filled triangle point-up","filled diamond","solid circle","bullet")
+  symbols<-cluster.symbol(k)
   Informations<-list()
   time <- sort(unique(databaseTr$Dataset$Time))
 
@@ -35,7 +36,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
     classification$meancurves->meancurves->Informations$meancurves
   }
   classificate <- rep(classes,databaseTr$LenCurv)
-  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv$Progeny,databaseTr$LenCurv))
+  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv[[paste(feature)]],databaseTr$LenCurv))
 
 
   plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))

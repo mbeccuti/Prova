@@ -13,14 +13,14 @@
 
 
 
-FittingAndClustering<-function(databaseTr,h,k,FCM_all,Info)
+FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature)
 {
   out<-list()
   out.funcit <-FCM_all[[paste("k=",k)]][[paste("h=",h)]]
   models<-c("FCM","Malthus","Gompertz","Logistic")
   for(i in models)
   {
-    out[[paste(i)]]<-ClusterWithMeanCurve_plot(out.funcit,databaseTr,Info =paste(Info), k,All = TRUE,i)
+    out[[paste(i)]]<-ClusterWithMeanCurve_plot(out.funcit,databaseTr,Info =paste(feature), k,All = TRUE,i)
 
   }
   return(out)
