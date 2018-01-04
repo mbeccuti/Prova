@@ -27,7 +27,13 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,Info,save=FALSE)
   out$MeanCurves<-plot_grid(plotlist = mcurves)
   if(save==TRUE)
   {
-    ggsave(MeanCurves,plot =out$MeanCurves )
+    ggsave(filename="MeanCurves.pdf",plot =out$MeanCurves,width=29, height = 20, units = "cm",scale = 1 )
+    ggsave(filename = "FCMCluster.pdf",plot=out$FCM$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1)
+    ggsave(filename = "MalthusCluster.pdf",plot=out$Malthus$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1)
+    ggsave(filename = "GompertzCluster.pdf",plot=out$Gompertz$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1)
+    ggsave(filename = "LogisticCluster.pdf",plot=out$Logistic$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1)
+
+    dev.off()
   }
   return(out)
 }

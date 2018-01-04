@@ -35,15 +35,9 @@ PCAbarplot <- function(data.matrix,save=FALSE)
     labs(title="PCA barplot", x="Components", y = "Variances")+
     theme(plot.title = element_text(hjust = 0.5))
 
-  # windows()
-  # screeplot(pca,type="barplot",col="royalblue2",ylim=c(0,11/10*max(eigs)),main="PCA barplot")
-  # text(x=seq(0.2+0.5,ncomp+1+0.2,1+0.2), y=eigs, paste(signif(percentage,4),"%",sep="") ,cex=1,col="red",pos=3)
   if(save==TRUE)
   {
-    pdf(file="PCAbarplot.pdf",paper="a4r",width=11)
-
-    # Sys.sleep(3)
-    # dev.copy2pdf(device = postscript, file = "PCAbarplot.pdf",paper="a4r",width=11)
+    ggsave(filename="PCAbarplot.pdf",plot =PCA_barplot,width=29, height = 20, units = "cm",scale = 1 )
     dev.off()
   }
   return(list(plot=PCA_barplot,perc=percentage))
