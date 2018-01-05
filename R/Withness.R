@@ -13,8 +13,8 @@ Withness <- function(ClustCurve,MeanCurves,centroids=TRUE)
   K <- length(unique(ClustCurve[,4])) 
   ClustSymbol <- cluster.symbol(K)
   ### Withness matrix
-  withness <- matrix(numeric(K*2),ncol=K)
-  rownames(withness) <- c("mean","sd")
+  withness <- matrix(numeric(K*4),ncol=K)
+  rownames(withness) <- c("mean","sd","min","max")
   colnames(withness) <- paste("Cluster ",ClustSymbol,sep="")
 
   for (i in 1:K)
@@ -31,8 +31,10 @@ Withness <- function(ClustCurve,MeanCurves,centroids=TRUE)
 	### i-th cluster standard deviation distance
     if(length(within.i)==1) { StDev <- 0 }
     else                        StDev <- sd(within.i)
+	MinDist <- min(within.i)
+	MaxDist <- max(within.i)
 	### i-th cluster withness data
-    withness[,i] <- cbind(MeanDist,StDev)
+    withness[,i] <- cbind(MeanDist,StDev,MinDist,MaxDist)
   }
  return(withness)
 }

@@ -1,9 +1,10 @@
-WithCluster_CurvDist <- function(ClustCurve,i) 
+
+WithCluster_CurvDist <- function(ClustCurve,i)
 {
   ### i-th cluster curves data
   ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
   ### i-th cluster curves ID
-  index <- unique(ClustCurve.i[,3])
+  index <- sort(unique(ClustCurve.i[,1]))
   ### i-th cluster magnitudo
   ni <- length(index)
 
@@ -13,10 +14,10 @@ WithCluster_CurvDist <- function(ClustCurve,i)
    count <- 0
    for (k in 1:(ni-1))
     {
-      A <- ClustCurve.i[ClustCurve.i[,3]==index[k],1:2]
+      A <- ClustCurve.i[ClustCurve.i[,1]==index[k],2:3]
       for (j in (k+1):ni)
        {
-         B <- ClustCurve.i[ClustCurve.i[,3]==index[j],1:2]
+         B <- ClustCurve.i[ClustCurve.i[,1]==index[j],2:3]
          count <- count +1
          within.i[count] <- hausdorff(A,B)
        }
@@ -29,18 +30,18 @@ WithCluster_CurvDist <- function(ClustCurve,i)
 
 WithCluster_MeanDist <- function(ClustCurve,MeanCurves,i)
 {
-  TimeGrid <- sort(unique(ClustCurve[,1]))
+  TimeGrid <- sort(unique(ClustCurve[,2]))
   ### i-th cluster curves data
   ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
   ### i-th cluster curves ID
-  index <- unique(ClustCurve.i[,3])
+  index <- sort(unique(ClustCurve.i[,1]))
   ### i-th cluster magnitudo
   ni <- length(index)
   withmean.i <- numeric(ni)
   ### i-th cluster max obs time
   tmax <- max(ClustCurve.i[,2])
   ### i-th cluster meancurve truncated at tmax
-  MeanCurve.i <- MeanCurve[,i][which(TimeGrid <= tmax)]
+  MeanCurve.i <- MeanCurves[,i][which(TimeGrid <= tmax)]
   ### i-th cluster obs time grid
   TimeGrid.i <- TimeGrid[TimeGrid <= tmax]
   ### i-th cluster meancurve
@@ -48,7 +49,7 @@ WithCluster_MeanDist <- function(ClustCurve,MeanCurves,i)
   for (k in 1:ni)
   {
     ### i-th cluster curves
-    B <- ClustCurve.i[ClustCurve.i[,3]==index[k],1:2]
+    B <- ClustCurve.i[ClustCurve.i[,1]==index[k],2:3]
     ### Hausdorff distance between i-th cluster meancurve and k-th curve respectively
     withmean.i[k] <- hausdorff(A,B)
   }
