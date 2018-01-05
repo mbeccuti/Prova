@@ -46,7 +46,7 @@ Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc)
     {
       mycontfclust = new("funcyCtrl",baseType="splines",dimBase=5,init="kmeans",nrep=10,redDim=h)
       out.funcit<- funcit(data.funcit,seed=2404,k,methods="fitfclust",funcyCtrl=mycontfclust,save.data=TRUE)
-      output_h[[paste("h=",h)]]<-
+      output_h[[paste("h=",h)]] <- out.funcit
       matrix_BIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@BIC
       matrix_AIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@AIC
     }
