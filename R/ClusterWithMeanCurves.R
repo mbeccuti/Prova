@@ -37,8 +37,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,feature,k,All=FALSE,mo
   }
   classificate <- rep(classes,databaseTr$LenCurv)
   curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv[[paste(feature)]],databaseTr$LenCurv))
-  Information$ClustCurve <- curves[,1:4]
-  Information$FeatureColour <- databaseTr$FeatureColour
+  Information$ClustCurve <- data.frame(merge(curves[,1:4],databaseTr$LabCurv[,c("ID",feature)],by="ID"))
 
   plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))
   PlotMeanCurveFCM<-ggplot()+
