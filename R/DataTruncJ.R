@@ -8,12 +8,12 @@
 #' @examples
 #' @export
 DataTrunc <- function(alldata,truncTime=NULL)
-{  
+{
    # Variables inizialization
    dataset <- alldata$Dataset
    sample.size <- max(unique(dataset[,1]))
    lencurv.tr <- numeric(sample.size)
-   
+
    # Data truncation
   if(!is.null(truncTime))
   {
@@ -23,7 +23,7 @@ DataTrunc <- function(alldata,truncTime=NULL)
    alldata.tr=list(Dataset=dataset.tr,LenCurv=lencurv.tr,LabCurv=alldata$LabCurv,TimeGrid=timegrid.tr)
   }
   else alldata.tr <- alldata
-  
+
   return(alldata.tr)
 }
 

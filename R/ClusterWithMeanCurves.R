@@ -14,29 +14,31 @@ library("cowplot")
 source("R/fitfclust.R")
 source("R/Residuals.R")
 source("R/Clustering.R")
+source("R/cluster.symbol.R")
 
-ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model)
+ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,feature,k,All=FALSE,model)
 {
 
-  symbols<- c("circle", "triangle","cross","times","diamond","reverse triangle","square cross","star","diamond", "plus","circle plus","triangles up and down","square plus","circle cross","square and triangle down","filled square","filled circle","filled triangle point-up","filled diamond","solid circle","bullet")
-  Informations<-list()
+  symbols<-cluster.symbol(k)
+  Information<-list()
   time <- sort(unique(databaseTr$Dataset$Time))
 
   if(model=="FCM")
   {
-    Cluster(out.funcit)->classes->Informations$classes
+    Cluster(out.funcit)->classes->Information$classes
     out.fit<-out.funcit@models$fitfclust@fit
-    fitfclust.curvepredIrreg(out.fit)$meancurves->meancurves->Informations$meancurves
+    fitfclust.curvepredIrreg(out.fit)$meancurves->meancurves->Information$meancurves
   }
   else{
     clustering(databaseTr,k,model) ->classification
-    classification$cluster ->classes-> Informations$classes
-    classification$center -> Informations$center
-    classification$meancurves->meancurves->Informations$meancurves
+    classification$cluster ->classes-> Information$classes
+    classification$center -> Information$center
+    classification$meancurves->meancurves->Information$meancurves
   }
   classificate <- rep(classes,databaseTr$LenCurv)
-  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv$Progeny,databaseTr$LenCurv))
-
+  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv[[paste(feature)]],databaseTr$LenCurv))
+  Information$ClustCurve <- curves[,1:4]
+  Information$FeatureColour <- databaseTr$FeatureColour
 
   plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))
   PlotMeanCurveFCM<-ggplot()+
@@ -54,14 +56,14 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,Info,k,All=FALSE,model
       plots[[paste(symbols[i],"Cluster")]]<-ggplot()+
         geom_line(data=plot_data[plot_data$clusters==i,], aes(x=time,y=means),size =1.3 )+
         labs(title=paste(model,"",symbols[i],"Cluster"), x="Days", y = "Volume")+
-        geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(Info)))+
-        scale_colour_manual(values = col,limits=col, name=paste(Info))+
+        geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(feature)))+
+        scale_colour_manual(values = col,limits=col, name=paste(feature))+
         theme(plot.title = element_text(hjust = 0.5))
     }
      plots[["ALL"]]<-plot_grid(plotlist = plots)
      plots$ALL
   }
- return(list(plotMeanCurve=PlotMeanCurveFCM,plotsCluster=plots,Informations=Informations,ClustCurve=curves[,1:4]))
+ return(list(plotMeanCurve=PlotMeanCurveFCM,plotsCluster=plots,Information=Information))
 }
 
 

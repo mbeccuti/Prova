@@ -28,7 +28,7 @@ GrowthCurve <- function(alldata,feature)
   GrowthCurve + scale_colour_manual(values = feature.palette)
   
   ### Enrich alldata with colour palette
-  alldata$PalColour <- feature.palette
+  alldata$FeatureColour <- feature.palette
   
   GrowthCurve.ls <- list(GrowthCurve_plot=GrowthCurve,alldata=alldata)
   
