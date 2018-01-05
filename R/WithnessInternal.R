@@ -1,4 +1,4 @@
-WithCluster_CurvDist <- function(ClustCurve,i)
+WithCluster_CurvDist <- function(ClustCurve,i) 
 {
   ### i-th cluster curves data
   ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
@@ -40,7 +40,7 @@ WithCluster_MeanDist <- function(ClustCurve,MeanCurves,i)
   ### i-th cluster max obs time
   tmax <- max(ClustCurve.i[,2])
   ### i-th cluster meancurve truncated at tmax
-  MeanCurve.i <- MeanCurves[,i][which(TimeGrid <= tmax)]
+  MeanCurve.i <- MeanCurve[,i][which(TimeGrid <= tmax)]
   ### i-th cluster obs time grid
   TimeGrid.i <- TimeGrid[TimeGrid <= tmax]
   ### i-th cluster meancurve

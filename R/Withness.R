@@ -8,8 +8,9 @@
 #'
 #' @import cluster.symbol
 #' @export
-Withness <- function(ClustCurve,MeanCurves,K,centroids=TRUE)
-{  
+Withness <- function(ClustCurve,MeanCurves,centroids=TRUE)
+{ 
+  K <- length(unique(ClustCurve[,4])) 
   ClustSymbol <- cluster.symbol(K)
   ### Withness matrix
   withness <- matrix(numeric(K*2),ncol=K)
