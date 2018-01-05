@@ -1,5 +1,7 @@
-Betweenness <- function(ClustSymbol,ClustCurve,MeanCurves,ClassCurve,K,centroids)
-{ classes <- ClustSymbol[ClassCurve]
+Betweenness <- function(ClustCurve,MeanCurves,ClassCurve,centroids)
+{ K <- length(unique(ClustCurve[,4]))
+  ClustSymbol <- cluster.symbol(K)
+  classes <- ClustSymbol[ClassCurve]
   if(centroids==FALSE)
   {
    between.near <- matrix(numeric(K*3*(K-1)),ncol=3*(K-1))

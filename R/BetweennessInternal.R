@@ -1,5 +1,7 @@
-BetweenCluster_CurvDist <- function(ClustSymbol,ClustCurve,i)
+BetweenCluster_CurvDist <- function(ClustCurve,i)
 {
+ K <- length(unique(ClustCurve[,4]))
+ ClustSymbol <- cluster.symbol(K)
  ### i-th cluster info
    ### curves data
    ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
@@ -64,8 +66,10 @@ BetweenCluster_CurvDist <- function(ClustSymbol,ClustCurve,i)
   return(list(CurveDistance=dist.info,Between=between.i,NearCurveID=near.curve,FarCurveID=far.curve))
 }
 
-BetweenCluster_MeanDist <- function(ClustSymbol,ClustCurve,MeanCurves,i)
-{
+BetweenCluster_MeanDist <- function(ClustCurve,MeanCurves,i)
+{ 
+  K <- length(unique(ClustCurve[,4]))
+  ClustSymbol <- cluster.symbol(K)
   TimeGrid <- sort(unique(ClustCurve[,1]))
   ### i-th cluster curves data
   ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
