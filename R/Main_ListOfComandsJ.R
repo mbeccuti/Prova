@@ -10,6 +10,7 @@ source("R/DataImport.R")
 
 dati<-DataImport(file1,file2)
 
+source("R/GrowthCurve.R")
 source("R/DataTruncJ.R")
 source("R/DataTruncation.R")
 dati.tr <- DataTruncation(alldata=dati,trunc.time=60,feature="Progeny",path="Data/")
@@ -37,27 +38,26 @@ ciao<-FittingAndClustering(databaseTr = dati.tr, h = 2, k=k,FCM_all = out$FCM_al
 source("R/haus.R")
 source("R/cluster.symbol.R")
 
-### Withness
-source("R/WithnessInternal.R")
-ClustCurve <- FCMplots$Informations$ClustCurve
-ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
-MeanCurves <- FCMplots$Informations$meancurves
-MeanCurves.i <- MeanCurves[,i]
-ClustSymbol<-cluster.symbol(k)
-source("R/Withness.R")
-Withness(ClustCurve,MeanCurves,centroids=FALSE) -> wt
+### Withinness
+source("R/WithinnessInternal.R")
+ClustCurve <- FCMplots$Information$ClustCurve
+MeanCurves <- FCMplots$Information$meancurves
+
+source("R/Withinness.R")
+Withinness(ClustCurve,MeanCurves,centroids=FALSE) -> wt
 
 ### Betweenness
 source("R/BetweennessInternal.R")
 BetweenCluster_CurvDist(ClustCurve,i)
 BetweenCluster_MeanDist(ClustCurve,MeanCurves,i)
 source("R/Betweenness.R")
-curve.class <- FCMplots$Informations$classes
-Betweenness(ClustSymbol,ClustCurve,MeanCurves,curve.class,K,centroids=TRUE)
+
+curve.class <- FCMplots$Information$classes
+Betweenness(ClustCurve,MeanCurves,centroids=TRUE)
 
 ### Plot
 source("R/PlotWithinnessBetweenness.R")
+PlotWithinness.i(ClustCurve,MeanCurves,i,centroids=TRUE,shift=0)
+PlotWithinnessBetweenness(ClustCurve,MeanCurves) -> p
 
-withness.i <- wt[,i]
-ClustSymbol.i <- ClustSymbol[i]
-PlotWithiness.i(withness.i,ClustSymbol.i)
+

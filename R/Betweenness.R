@@ -1,6 +1,7 @@
-Betweenness <- function(ClustCurve,MeanCurves,ClassCurve,centroids)
+Betweenness <- function(ClustCurve,MeanCurves,centroids)
 { K <- length(unique(ClustCurve[,4]))
   ClustSymbol <- cluster.symbol(K)
+  ClassCurve <- unique(ClustCurve[,c(1,4)])[,2]
   classes <- ClustSymbol[ClassCurve]
   if(centroids==FALSE)
   {
@@ -10,7 +11,7 @@ Betweenness <- function(ClustCurve,MeanCurves,ClassCurve,centroids)
    between.far <- between.near
    for (i in 1:K)
     {
-	 Betweenness.i <- BetweenCluster_CurvDist(ClustSymbol,ClustCurve,i)
+	 Betweenness.i <- BetweenCluster_CurvDist(ClustCurve,i)
 	 near.curve <- Betweenness.i$NearCurve
      far.curve <- Betweenness.i$FarCurve
 	 for (j in seq(1,3*(K-1),3))
@@ -34,7 +35,7 @@ Betweenness <- function(ClustCurve,MeanCurves,ClassCurve,centroids)
   
   for(i in 1:K)
     {
-	centroid.dist[i,] <-  BetweenCluster_MeanDist(ClustSymbol,ClustCurve,MeanCurves,i) 
+	centroid.dist[i,] <-  BetweenCluster_MeanDist(ClustCurve,MeanCurves,i) 
 	ClustSymbol.i <- ClustSymbol[-i]
 	min.dist <- min(centroid.dist[i,][centroid.dist[i,]!=0])
 	argmin.dist <- ClustSymbol.i[which.min(centroid.dist[i,][centroid.dist[i,]!=0])]

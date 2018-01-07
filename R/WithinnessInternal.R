@@ -24,7 +24,7 @@ WithCluster_CurvDist <- function(ClustCurve,i)
     }
    }
   else within.i <- 0
-  ### i-th cluster withness
+  ### i-th cluster withinness
   return(within.i)
 }
 

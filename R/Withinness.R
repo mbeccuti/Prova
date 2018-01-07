@@ -8,14 +8,14 @@
 #'
 #' @import cluster.symbol
 #' @export
-Withness <- function(ClustCurve,MeanCurves,centroids=TRUE)
+Withinness <- function(ClustCurve,MeanCurves,centroids=TRUE)
 { 
   K <- length(unique(ClustCurve[,4])) 
   ClustSymbol <- cluster.symbol(K)
-  ### Withness matrix
-  withness <- matrix(numeric(K*4),ncol=K)
-  rownames(withness) <- c("mean","sd","min","max")
-  colnames(withness) <- paste("Cluster ",ClustSymbol,sep="")
+  ### Withinness matrix
+  withinness <- matrix(numeric(K*4),ncol=K)
+  rownames(withinness) <- c("mean","sd","min","max")
+  colnames(withinness) <- paste("Cluster ",ClustSymbol,sep="")
 
   for (i in 1:K)
   {
@@ -33,8 +33,8 @@ Withness <- function(ClustCurve,MeanCurves,centroids=TRUE)
     else                        StDev <- sd(within.i)
 	MinDist <- min(within.i)
 	MaxDist <- max(within.i)
-	### i-th cluster withness data
-    withness[,i] <- cbind(MeanDist,StDev,MinDist,MaxDist)
+	### i-th cluster withinness data
+    withinness[,i] <- cbind(MeanDist,StDev,MinDist,MaxDist)
   }
- return(withness)
+ return(withinness)
 }
