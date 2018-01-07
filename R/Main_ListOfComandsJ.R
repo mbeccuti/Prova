@@ -58,6 +58,6 @@ Betweenness(ClustCurve,MeanCurves,centroids=TRUE)
 ### Plot
 source("R/PlotWithinnessBetweenness.R")
 PlotWithinness.i(ClustCurve,MeanCurves,i,centroids=TRUE,shift=0)
-PlotWithinnessBetweenness(ClustCurve,MeanCurves) -> p
+PlotWithinnessBetweenness(ClustCurve,MeanCurves,path="R/") -> t
 
 
