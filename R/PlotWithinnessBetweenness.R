@@ -1,4 +1,4 @@
-PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves)
+PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,path)
 {
   library(ggplot2)
   library(ggforce)
@@ -48,8 +48,6 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves)
   {
   ### Data frames
   dataplot <- DataFrameWithiness.i(ClustCurve,MeanCurves,i[k],centroids=TRUE,shift=cumsum(shift)[i[k]])
-  #circles <- rbind(circles,dataplot$circles)
-  #WithDist <- rbind(WithDist,dataplot$WithDist)
   circles[index[k,],] <- dataplot$circles
   WithDist[counter:(cumsum(cluster.magnitudo)[i[k]]),] <- dataplot$WithDist
   counter <- cumsum(cluster.magnitudo)[i[k]] + 1
@@ -64,6 +62,9 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves)
   plots <- plots + scale_shape_manual(values=c(0:(K-1))) + geom_point(data=WithDist,aes(x=x1,y=y1,shape=Cluster,color=feature),size=2)
   feature.name <- colnames(WithDist)[4]
   plots <- plots  + geom_text(aes(x=x0, y=y0,label=Cluster), data=circles) + scale_colour_manual(values = feature.palette,name=feature.name) + labs(title="Cluster betweenness and withinness",x="distance",y="distance")
+  pdf(paste(path,"Betweenness&Withinness.pdf",sep=""),paper="a4r",width=11)
+  print(plots)
+  dev.off()
   return(plots)
 }
 
