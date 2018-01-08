@@ -1,7 +1,6 @@
 #' TimeGridDensity() is a convenient function for controlling if the time grid is enough dense.
 #' It is possible to save the plot in a pdf specifying the path.
 #'
-#'
 #' @param  alldata List containing the number of observations per each curve (called LenCurv), and a data frame constituted
 #'                from the curves' ID, observed values and the respective times.
 #'                It is generated automatically from the function DataImport().
