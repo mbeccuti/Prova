@@ -1,15 +1,18 @@
-#' Observations density across time
+#' TimeGridDensity() is a convenient function for controlling if the time grid is enough dense.
+#' It is possible to save the plot in a pdf specifying the path.
 #'
-#' Plot time grid density
-#' @param  alldata list DataImport() output
-#' @return time grid density plot
+#'
+#' @param  alldata List containing the number of observations per each curve (called LenCurv), and a dataset constituted
+#'                from the curves' ID, observed values and the respective times.
+#'                It is generated automatically from the function DataImport().
+#' @param  save Save is an objects of type "logical", if it is TRUE then it is possible to save the plot in a pdf.
+#' @param  path	Path to save plot to (combined with filename).
+#' @return The time grid density plot as a ggplot object.
 #' @examples
 #' @import ggplot2
 #' @export
 TimeGridDensity <- function(alldata,save=FALSE,path=NULL)
 {
- ### library
- library(ggplot2)
 
  ### Variables initialization
  TimeMeasure <-alldata$Dataset[,c(1,3)]
