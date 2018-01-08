@@ -35,7 +35,7 @@ Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc)
   matrix_BIC<-matrix(0,nrow = length(K),ncol = length(H),dimnames=list(row_names,col_names))
 
 
-  data.funcit <-matrix(c(databaseTr$data.matrixtr$ID,databaseTr$data.matrixtr$Vol,databaseTr$data.matrixtr$Time),ncol=3,byrow=F)
+  data.funcit <-matrix(c(databaseTr$ID,databaseTr$Vol,databaseTr$Time),ncol=3,byrow=F)
 
   # return a list of K lists, in which is is stored the output for all h
   # We also create two matrixes with the BIC and AIC values
@@ -45,12 +45,13 @@ Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc)
     for(h in H)
     {
       mycontfclust = new("funcyCtrl",baseType="splines",dimBase=5,init="kmeans",nrep=10,redDim=h)
-      output_h[[paste("h=",h)]]<- funcit(data.funcit,seed=2404,k,methods="fitfclust",funcyCtrl=mycontfclust,save.data=TRUE)
+      out.funcit<- funcit(data.funcit,seed=2404,k,methods="fitfclust",funcyCtrl=mycontfclust,save.data=TRUE)
+      output_h[[paste("h=",h)]] <- out.funcit
       matrix_BIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@BIC
       matrix_AIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@AIC
     }
     output_k[[paste("k=",k)]]<-output_h
   }
 
-  return(list(CONNECTOR_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC))
+  return(list(FCM_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC))
 }
