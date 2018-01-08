@@ -1,7 +1,7 @@
 library("funcy")
 library("grDevices")
 library("ggplot2")
-
+library("readxl")
 
 file1<-"data/1864dataset.xls"
 file2<-"data/1864info.txt"
