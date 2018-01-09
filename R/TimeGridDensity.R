@@ -4,7 +4,7 @@
 #' @param  alldata List containing the number of observations per each curve (called LenCurv), and a data frame constituted
 #'                from the curves' ID, observed values and the respective times.
 #'                It is generated automatically from the function DataImport().
-#' @param  save Save is an objects of type "logical", if it is TRUE then it is possible to save the plot in a pdf.
+#' @param  save When TRUE (the default is FALSE), it is possible to save the plot in a pdf.
 #' @param  path	Path to save plot to (combined with filename).
 #' @return The time grid density plot as a ggplot object.
 #' @examples
