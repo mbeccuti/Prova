@@ -16,7 +16,7 @@ Cluster_choice(database, K, H)
 }
 \value{
 The matrixes in which are stored the AIC and Bic values for each model,
-        and a list with the output of the Functional Clustering with the different inputs.
+        and a list with the outputs of the FCM with the different inputs.
 }
 \description{
 Clacolate a table with the BIC values and AIC values with different cluster and h, the dimension
@@ -26,6 +26,7 @@ of the space for the PCA....
 
 path <-".../1864_no_P7.csv"
 number_curves<-24
+tr.day<-60
 database <- creazionedati(path,number_curves,tr.day)
 K<-c(4,5,6)
 H<-c(1,2)
