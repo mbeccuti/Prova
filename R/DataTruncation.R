@@ -12,9 +12,9 @@
 #'             at the truncation time in a pdf.
 #' @param path Path to save plot to (combined with filename).
 #' @return Return the list containing all the informations truncated at the time chosen, plus the feature color palette.
-#' @import gridExtra, GrowthCurve, DataTrunc
+#' @import gridExtra, GrowthCurve
 #' @export
-DataTruncation <- function(alldata,trunc.time,feature,save=FALSE,path=NULL)
+DataTruncation <- function(alldata,trunc.time=NULL,feature,save=FALSE,path=NULL)
 {
 ### Variables initialization
 growth.curve.ls <- GrowthCurve(alldata,feature)
@@ -29,7 +29,20 @@ if(save==TRUE)
 
 
 ### Truncated dataset
-alldata.tr <- DataTrunc(alldata,truncTime=trunc.time)
+dataset <- alldata$Dataset
+sample.size <- max(unique(dataset[,1]))
+lencurv.tr <- numeric(sample.size)
+
+# Data truncation
+if(!is.null(trunc.time))
+{
+  dataset.tr <- dataset[dataset[,3]<=trunc.time,]
+  for (i in 1:sample.size)  lencurv.tr[i]<-length(dataset.tr[,1][dataset.tr[,1]==i])
+  timegrid.tr <- alldata$TimeGrid[alldata$TimeGrid<=trunc.time]
+  alldata.tr=list(Dataset=dataset.tr,LenCurv=lencurv.tr,LabCurv=alldata$LabCurv,TimeGrid=timegrid.tr)
+}
+else alldata.tr <- alldata
+
 alldata.tr$FeatureColour <- growth.curve.ls$alldata$FeatureColour
 
 return(alldata.tr)

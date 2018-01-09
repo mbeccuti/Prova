@@ -2,6 +2,7 @@ library("funcy")
 library("grDevices")
 library("ggplot2")
 library("readxl")
+library("cowplot")
 
 file1<-"data/1864dataset.xls"
 file2<-"data/1864info.txt"
@@ -15,9 +16,12 @@ source("R/TimeGridDensity.R")
 TimeGridDensity(dati,save=TRUE,path=NULL)
 
 source("R/GrowthCurve.R")
-source("R/DataTruncJ.R")
 source("R/DataTruncation.R")
+source("R/DataVisualization.R")
+
 dati.tr <- DataTruncation(alldata=dati,trunc.time=60,feature="Progeny",save=TRUE,path="data")
+
+DataVisualization(dati,feature="Progeny",save=TRUE,path="data")
 
 source("R/PCAbarplot.R")
 pca<-PCAbarplot(dati.tr$Dataset,save=TRUE,path="data")
