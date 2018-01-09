@@ -1,17 +1,25 @@
-#' Principal Components Analysis bar plot
+#' PCAbarplot() is used to choice the dimension of the cluster mean space, h.
+#' The PCA method performs an accurate analysis to determine whether the means lie in a lower
+#' dimensional space, note that if h is equal to the number of cluster menus one, does not produce restriction on the mean
+#' space.
+#' To estimate h the Principal Component Analysis (PCA) is applied to the spline coefficients provided
+#' for each curves by the functional clustering model.
+#' It generates a bar plot indicating with how much percentage the principal components explain
+#' the variability in the data.
+#' Usually the components are choosen if the sum of the respective percentages is greater than 95%.
 #'
-#' Add a dataset of ID, vol and time measures and choose to save or not the PCA bar plot.
 #'
 #' @param data.matrix A matrix with 3 columns: curve ID, volume and time measures.
-#' @param save A logical constant.
-#' @return The plot of the variances against the number of the principal component.
+#' @param save When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
+#'             the growth curves plot in a pdf.
+#' @param path Path to save plot to (combined with filename).
+#' @return A list containing the plot of the variances against the number of the principal component and
+#'         the vector of percentages.
 #' @examples
-#' @import fda
+#' @import fda, makeCoeffs
 #' @export
 PCAbarplot <- function(data.matrix,save=FALSE,path=NULL)
 {
- library(fda)
-
   TimeGrid <- c(1:max(data.matrix[,3]))
 
   # curves splines basis coefficients
@@ -42,47 +50,3 @@ PCAbarplot <- function(data.matrix,save=FALSE,path=NULL)
   return(list(plot=PCA_barplot,perc=percentage))
   }
 
-# makeCoeffs function returns the data coefficients with respect to a base type chosen
-makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert){
-
-    if(is.null(base)){
-        tempBase <- makeBasis(grid, dimBase)$phi
-        base <- svd(tempBase)$u
-    }else{
-        base <- base[,1:dimBase]
-    }
-    if(reg){
-        coeffs <- t((solve(t(base) %*% base + pert *
-                               diag(dimBase))
-                     %*%t(base))%*%t(data))
-        fullBase <- base
-    }else{
-        curveIndx <- data[,1]
-        timeIndx <- match(data[,3],grid)
-        n <- max(curveIndx)
-        fullBase <- base[timeIndx,  ]
-        coeffs <- matrix(0,nrow=n,ncol=sum(dimBase))
-        for (i in 1:n){
-            if(is.null(dim(base)[1]))
-                base <- t(t(base))
-            basei <- fullBase[curveIndx==i,]
-            yi <- data[curveIndx==i,2]
-            if(length(yi)>1){
-                coeffs[i,] <- solve(t(basei) %*% basei + pert * diag(dimBase)) %*% t(basei) %*%yi
-            }else{
-                coeffs[i,] <- ((basei) * basei + pert )^(-1) * (basei)*yi
-            }
-        }
-    }
-    return(list(coeffs=coeffs, base=base, fullBase=fullBase, dimBase=dimBase))
-}
-
-# makeBasis function returns a splines basis, chosen a time grid and a basis dimension
-makeBasis <- function(time, nbasis){
-    m <- length(time)
-    bObj <-  create.bspline.irregular(c(time[1],time[m]),
-                                                 nbasis=nbasis,
-                                                 norder=min(nbasis, 4))
-    phi <- eval.basis(time, bObj)
-    return(list(bObj=bObj, phi=phi))
-}
