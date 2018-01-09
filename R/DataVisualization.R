@@ -16,10 +16,12 @@
 #' @export
 DataVisualization <- function(alldata,feature,save=FALSE,path=NULL)
 {
+
  ### Variables initialization
  growth.curves <- GrowthCurve(alldata,feature)
  plot1 <- growth.curves$GrowthCurve_plot
  plot2 <- TimeGridDensity(alldata)
+
 
  if(save==TRUE)
  {

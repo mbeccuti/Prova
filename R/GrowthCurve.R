@@ -10,27 +10,25 @@
 #' @export
 
 GrowthCurve <- function(alldata,feature)
-{ 
-  ### library
-  library(ggplot2)
-  
+{
   ### dataframe for ggplot
   dataplot <- alldata$Dataset
   dataplot <- data.frame(merge(alldata$Dataset,alldata$LabCurv[,c("ID",feature)],by="ID"))
-  dataplot[,feature]<-factor(as.matrix(dataplot[feature])) 
+  dataplot[,feature]<-factor(as.matrix(dataplot[feature]))
   feature.palette <- rainbow(dim(unique(dataplot[feature]))[1])
-  
+
   ### Set growth curve plot with ggplot
   GrowthCurve <- ggplot(data=dataplot, aes(x=Time, y=Vol,group=ID,col=dataplot[,feature])) +
   geom_line() +
   geom_point() +
-  labs(title="Tumor growth curves",x="Time", y = "Volume",col=feature) 
+  labs(title="Tumor growth curves",x="Time", y = "Volume",col=feature)+
+  theme(plot.title = element_text(hjust = 0.5),title =element_text(size=10, face='bold'))
   GrowthCurve + scale_colour_manual(values = feature.palette)
-  
+
   ### Enrich alldata with colour palette
   alldata$FeatureColour <- feature.palette
-  
+
   GrowthCurve.ls <- list(GrowthCurve_plot=GrowthCurve,alldata=alldata)
-  
+
   return( GrowthCurve.ls )
 }
