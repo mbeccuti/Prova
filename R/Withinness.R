@@ -1,5 +1,4 @@
 #'
-#'
 #' @param
 #' @param
 #' @param
@@ -9,8 +8,8 @@
 #' @import cluster.symbol
 #' @export
 Withinness <- function(ClustCurve,MeanCurves,centroids=TRUE)
-{ 
-  K <- length(unique(ClustCurve[,4])) 
+{
+  K <- length(unique(ClustCurve[,4]))
   ClustSymbol <- cluster.symbol(K)
   ### Withinness matrix
   withinness <- matrix(numeric(K*4),ncol=K)

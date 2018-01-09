@@ -4,6 +4,7 @@
 #
 
 
+
 "fitfclust" <-
     function(data, k, reg=reg, regTime=NULL, dimBase=dimBase, h, p=5, epsilon=0.01,
              maxiter=20, pert =0.01, hard=F,

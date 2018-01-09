@@ -1,5 +1,6 @@
 PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,path)
 {
+
   library(ggplot2)
   library(ggforce)
   K <- length(unique(ClustCurve[,4]))
@@ -32,7 +33,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,path)
   r = numeric(3*K)      ,
   distance = numeric(3*K),
   Cluster = numeric(3*K)
-  )  
+  )
   colnames(circles) <- c("x0","y0","r","distance","Cluster")
   n <- length(unique(ClustCurve[,1]))
   WithDist <- data.frame(
@@ -40,7 +41,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,path)
   y1 = numeric(n),
   Cluster = numeric(n),
   feature = numeric(n)
-	)  
+	)
   colnames(WithDist) <- c("x1","y1","Cluster","feature")
   counter <- 1
   index <- matrix(seq(1,3*K),nrow=K,byrow=TRUE)
@@ -52,7 +53,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,path)
   WithDist[counter:(cumsum(cluster.magnitudo)[i[k]]),] <- dataplot$WithDist
   counter <- cumsum(cluster.magnitudo)[i[k]] + 1
   }
-  
+
   circles$distance <- factor(circles$distance)
   circles$Cluster <- factor(circles$Cluster)
   WithDist$Cluster <- factor(WithDist$Cluster)

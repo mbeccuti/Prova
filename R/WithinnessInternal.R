@@ -1,6 +1,7 @@
 
 WithCluster_CurvDist <- function(ClustCurve,i)
 {
+
   ### i-th cluster curves data
   ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
   ### i-th cluster curves ID
