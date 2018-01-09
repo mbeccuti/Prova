@@ -7,7 +7,8 @@
 #'                from the curves' ID, observed values and the respective times.
 #'                It is generated automatically from the function DataImport().
 #' @param trunc.time Numeric value at which truncate curves.
-#' @param feature It is the string feature name, stored in the target file, to plot curves according to.
+#' @param feature It is the string feature name, stored in the target file.
+#'                The curves will be plotted according to it.
 #' @param save When TRUE (the default is FALSE), it is possible to save the growth curves plot with a vertical line
 #'             at the truncation time in a pdf.
 #' @param path Path to save plot to (combined with filename).
