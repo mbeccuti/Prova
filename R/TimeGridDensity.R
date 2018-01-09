@@ -37,11 +37,12 @@ TimeGridDensity <- function(alldata,save=FALSE,path=NULL)
 
   ### Plot density grid
   TimeGrid_plot <- ggplot(df) +
-      geom_point(aes(Time1, Time2, col = d), size = 4) +
+      geom_point(aes(Time1, Time2), size = 2) +
 	    coord_fixed(ratio = 1) +
-      scale_color_identity() +
+      #scale_color_identity() +
       theme_bw() +
-	  labs(title="Time grid",x="Time", y = "Time")
+	    labs(title="Time grid",x="Time", y = "Time")+
+      theme(plot.title = element_text(hjust = 0.5),title =element_text(size=12, face='bold'))
 
   if(save==TRUE)
   {
