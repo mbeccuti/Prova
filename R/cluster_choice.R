@@ -8,6 +8,7 @@
 #' Furthermore, insering the PCA percentages calculated with the function PCAbarplot, the dimension h is choosen
 #' automatically, so that the sum of the first h percentages is greater than 95%.
 #'
+#'
 #' @param databaseTr  List containing the number of observations per each curve (called LenCurv),
 #'                and a data frame constituted from the curves' ID, observed values and the respective times,
 #'                that might be truncated at a specific time or not.
