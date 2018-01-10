@@ -1,5 +1,7 @@
+#' Cluster Choice
+#'
 #' Cluster_choice() calcolate the BIC and AIC values with respect of different number of cluster (k) and dimension
-#' of the mean space (h).
+#' of the cluster mean space (h).
 #' The Bayes information criterion (BIC) is a method useful to choose the number of clusters
 #' in a certain data sets. Then to rightly estimate the value of the cluster we compare them,
 #' choosing the cluster with the minimum BIC value, (same for AIC).
@@ -14,13 +16,13 @@
 #'                that might be truncated at a specific time or not.
 #'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
 #'                a truncation time.
-#' @param K A vector or value representing the number of cluster that you want to consider.
-#' @param h A vector or value representing the dimension of space h that you want to consider.
+#' @param K Number of clusters, it could be a vector.
+#' @param h Dimension of the cluster mean space.
 #'          As default is NULL, so that using the percentages from the PCA it is possible to estimate a value
 #'          for it such that the sum of the first h percentages is greater than 95%.
 #' @param PCAperc The PCA percentages calculated with the function PCAbarplot, if it is NULL (default) then it must
 #'        insert in input a value for h.
-#' @return A list containing the matrixes in which are stored the AIC and Bic values for different h and k,
+#' @return List containing the matrixes in which are stored the AIC and Bic values for different h and k,
 #'         and a list with the FCM's outputs.
 #' @examples
 #'

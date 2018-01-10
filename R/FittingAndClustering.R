@@ -8,11 +8,8 @@
 #' @examples
 #'
 #'
-#' @import ClusterWithMeanCurve_plot
+#' @import ClusterWithMeanCurve_plot, ggplot2
 #' @export
-
-
-
 FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NULL)
 {
   out<-list()

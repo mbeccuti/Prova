@@ -1,11 +1,7 @@
-#' makeCoeffs() function returns the data coefficients with respect to a base type chosen
+#' makeCoeffs() function returns the data coefficients with respect to a base type chosen.
 #'
-#' @param data
-#' @param
-#' @param
-#' @return
-#' @examples
-#' @import
+#' @importFrom fda create.bspline.basis
+#' @export
 makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert){
   if(is.null(base)){
     time<-grid
@@ -44,4 +40,3 @@ makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert){
   }
   return(list(coeffs=coeffs, base=base, fullBase=fullBase, dimBase=dimBase))
 }
-

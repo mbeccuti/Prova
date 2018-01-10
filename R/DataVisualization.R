@@ -1,3 +1,5 @@
+#' Data Visualitation
+#'
 #' DataVisualization() returns a plot that compares the density time grid and  the growth curves plot
 #' in order to understand if it is useful truncate the data and so choose the truncation time.
 #'
@@ -5,11 +7,11 @@
 #' @param alldata List containing the number of observations per each curve (called LenCurv),
 #'                and a data frame constituted from the curves' ID, observed values and the respective times.
 #'                It is generated automatically from the function DataImport().
-#' @param feature It is the string feature name, stored in the target file, to plot curves according to.
+#' @param feature String feature name, stored in the target file, to plot curves according to.
 #' @param save When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
 #'             the growth curves plot in a pdf.
 #' @param path Path to save plot to (combined with filename).
-#' @return alldata list DataImport() output with feature color palette
+#' @return alldata list DataImport() output with feature color palette.
 #' @import gridExtra
 #' @importFrom ggplot2 ggsave
 #' @importFrom cowplot plot_grid
