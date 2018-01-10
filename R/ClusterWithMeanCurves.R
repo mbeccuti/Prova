@@ -1,24 +1,37 @@
-#
-#  Progeny deve diventare un parametro, potremmo chiamarlo feature
+#' Mean Cluster Curves
+#'
+#' Selecting a model among FCM, Malthus, Gompertz and Logistic model, MClusterWithMeanCurve() generates the
+#' mean cluster curves in a single plot and in a plot per each cluster the curves that belongs to that.
+#' Furthemore it saves all the principal informations about that clusterization, for instance mean curve
+#' values and the cluster of belonging per each curve.
 #'
 #'
-#' @param
-#' @param
-#' @return ...ClustCurve è utilizzato nelle funzioni che calcolano withness and betweenness
+#' @param out.funcit Object of class funcyOutList, obtained by the function funcit from the package
+#'                   "funcy" or, selecting a value for k (number of clusters) and h (dimension of the space of
+#'                   of the cluster mean), from the function cluster_choice.
+#' @param databaseTr List containing the number of observations per each curve (called LenCurv),
+#'                and a data frame constituted from the curves' ID, observed values and the respective times,
+#'                that might be truncated at a specific time or not.
+#'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
+#'                a truncation time.
+#' @param feature String feature name, stored in the target file, to plot curves according to.
+#' @param k Number of clusters.
+#' @param model String model name, it is possible to choose one among FCM, Malthus, Gompertz and Logistic models.
+#' @return List containing the cluster mean curves plot for the model choosen, the k growth curves plots divided
+#'        depending on the cluster and a list of informations about the model clustered. The information list stores
+#'        the mean cluster.
 #' @examples
 #'
 #'
-#' @import
+#' @import ggplot2, cowplot
 #' @export
 
-library("ggplot2")
-library("cowplot")
 source("R/fitfclust.R")
 source("R/Residuals.R")
 source("R/Clustering.R")
 source("R/cluster.symbol.R")
 
-ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,feature,k,All=FALSE,model)
+ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
 {
 
   symbols<-cluster.symbol(k)
@@ -47,8 +60,6 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,feature,k,All=FALSE,mo
                     labs(title=paste(model," cluster mean curves"), x="Days", y = "Volume")+
                     theme(plot.title = element_text(hjust = 0.5))
  plots<-NULL
-  if(All)
-  {
 
     col<-as.factor(unique(curves$Info))
     plots<-list()
@@ -63,7 +74,7 @@ ClusterWithMeanCurve_plot<-function(out.funcit,databaseTr,feature,k,All=FALSE,mo
     }
      plots[["ALL"]]<-plot_grid(plotlist = plots)
      plots$ALL
-  }
+
  return(list(plotMeanCurve=PlotMeanCurveFCM,plotsCluster=plots,Information=Information))
 }
 

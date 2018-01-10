@@ -1,19 +1,22 @@
-#' To write.......
+#' Clustering
 #'
+#' The function clustering() fits and clusterize the data stored in databaseTr with a model among
+#' the Malthus, Gompertz and Logistic ones.
 #'
-#' @param Connector the list in which is stored all the informations, output from the function:"DataInfo"
-#' @param number_curves value that represents the number of the curves.
-#' @param k the value of the cluster that you want consider.
-#' @param model is the model that you are considering and with respect to you want to cluster
-#' @return A list of 3 elements, that are the parameters of the fitting, the center and the cluster of
-#'         affinity, for each curve.
+#' @param databaseTr  List containing the number of observations per each curve (called LenCurv),
+#'                and a data frame constituted from the curves' ID, observed values and the respective times,
+#'                that might be truncated at a specific time or not.
+#'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
+#'                a truncation time.
+#' @param k Number of clusters, it could be a vector.
+#' @param model String model name, it is possible to choose one among Malthus, Gompertz and Logistic models.
+#' @return List containing, for each curve, the parameters of the fitting with respect of the model choosen,
+#'         the center and the cluster of affinity.
 #' @examples
 #'
 #'
 #' @import grofit
 #' @export
-library(grofit)
-source("R/ModelFunctions.R")
 clustering<- function(databaseTr,k,model)
 {
 
@@ -43,6 +46,10 @@ clustering<- function(databaseTr,k,model)
     # fitgompertz
     if(model=="Gompertz")
     {
+      lsgompertz <- function(x,t,y)
+      {
+        sum(((x[1]*exp(-exp((x[2]*exp(1)/x[1])*(x[3]-t)+1)))-y)^2)
+      }
       initgompertz(tdata,Voldata,1,1,1) -> initgomp
       initgomp<- list(A=initgomp$A,mu=initgomp$mu,lambda=initgomp$lambda)
       parameters[i,]<- optim(initgomp,lsgompertz,method="L-BFGS-B",lower=c(0,0,0),t=tdata,y=Voldata)$par
@@ -51,6 +58,10 @@ clustering<- function(databaseTr,k,model)
     # fitlogistic
     if(model=="Logistic")
     {
+      lslogistic <- function(x,t,y)
+      {
+        sum(((x[1]/(1+exp((4*x[2]/x[1])*(x[3]-t)+2)))-y)^2)
+      }
       initlogistic(tdata,Voldata,1,1,1) -> initlog
       initlog<- list(A=initlog$A,mu=initlog$mu,lambda=initlog$lambda)
       parameters[i,]<- optim(initlog,lslogistic,method="L-BFGS-B",lower=c(0,0,0),t=tdata,y=Voldata)$par
@@ -60,6 +71,11 @@ clustering<- function(databaseTr,k,model)
     # fitMalthus
     if(model=="Malthus")
     {
+      lsmalthus <- function(x,t,y)
+      {
+
+        sum(((x[1]*exp(x[2]*t))-y)^2)
+      }
       par <- matrix(numeric(200),ncol=2)
       res <- numeric(100)
       for(j in 1:100)

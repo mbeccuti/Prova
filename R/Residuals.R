@@ -47,14 +47,5 @@ Residuals<- function(model,time,Vol,par,plot)
     curve<- x[1]*exp(x[2]*grid)
   }
 
-
-  if(plot==TRUE)
-  {
-    windows()
-    par(mfrow=c(2,2))
-    plot(fitted,res)
-    hist(res)
-    qqnorm(res)
-  }
   return(list("fit"=fitted,"qres"=qres,"curve"=curve,"res"=res))
 }

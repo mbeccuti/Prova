@@ -1,3 +1,5 @@
+#' Time Grid Density
+#'
 #' TimeGridDensity() is a convenient function for controlling if the time grid is enough dense.
 #' It is possible to save the plot in a pdf specifying the path.
 #'
