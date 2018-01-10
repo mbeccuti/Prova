@@ -1,5 +1,6 @@
 #' Mean Cluster Curves
 #'
+#'@description
 #' Selecting a model among FCM, Malthus, Gompertz and Logistic model, MClusterWithMeanCurve() generates the
 #' mean cluster curves in a single plot and in a plot per each cluster the curves that belongs to that.
 #' Furthemore it saves all the principal informations about that clusterization, for instance mean curve
@@ -25,14 +26,12 @@
 #'
 #' @import ggplot2, cowplot
 #' @export
-
-source("R/fitfclust.R")
-source("R/Residuals.R")
-source("R/Clustering.R")
-source("R/cluster.symbol.R")
-
 ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
 {
+  # source("R/fitfclust.R")
+  # source("R/Residuals.R")
+  # source("R/Clustering.R")
+  # source("R/cluster.symbol.R")
 
   symbols<-cluster.symbol(k)
   Information<-list()

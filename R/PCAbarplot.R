@@ -1,5 +1,6 @@
 #' PCA Bar Plot
 #'
+#'@description
 #' PCAbarplot() is used to choice the dimension of the cluster mean space, h.
 #' The PCA method performs an accurate analysis to determine whether the means lie in a lower
 #' dimensional space, note that if h is equal to the number of cluster menus one, does not produce restriction on the mean
@@ -8,7 +9,7 @@
 #' for each curves by the functional clustering model.
 #' It generates a bar plot indicating with how much percentage the principal components explain
 #' the variability in the data.
-#' Usually the components are choosen if the sum of the respective percentages is greater than 95%.
+#' Usually the components are choosen if the sum of the respective percentages is greater than 95 percent.
 #'
 #'
 #' @param data.matrix Matrix with 3 columns: curve ID, volume and time measures.
@@ -17,9 +18,9 @@
 #' @param path Path to save plot to (combined with filename).
 #' @return List containing the plot of the variances against the number of the principal component and
 #'         the vector of percentages.
-#' @examples
+#' @examples to write...
 #' @import ggplot2
-#' @importFrom funcit::makeCoeffs
+#' @import funcit::makeCoeffs
 #' @export
 PCAbarplot <- function(data.matrix,save=FALSE,path=NULL)
 {

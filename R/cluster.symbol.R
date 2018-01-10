@@ -1,5 +1,8 @@
 #' Cluster Symbols
 #'
+#' @description
+#' Assign a symobol per each cluster.
+#'
 #' @param K Number of clusters, it could be a vector.
 #' @return  Vector of K symbols.
 #' @examples

@@ -1,5 +1,6 @@
 #' Fitting and Clustering
 #'
+#'@description
 #' Using the function ClusterWithMeanCurve() it is possible to save the mean cluster curves in a single plot
 #' and in a plot per each cluster the curves that belongs to that. With FittingAndClustering() is possible to
 #' do that for the FCM, Malthus, Gompertz and Logistic models in order to compare their clusterizations.

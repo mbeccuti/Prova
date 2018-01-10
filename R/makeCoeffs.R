@@ -1,3 +1,6 @@
+#' Make Coeffs
+#'
+#' @description
 #' makeCoeffs() function returns the data coefficients with respect to a base type chosen.
 #'
 #' @importFrom fda create.bspline.basis

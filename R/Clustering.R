@@ -1,5 +1,6 @@
 #' Clustering
 #'
+#'@description
 #' The function clustering() fits and clusterize the data stored in databaseTr with a model among
 #' the Malthus, Gompertz and Logistic ones.
 #'
