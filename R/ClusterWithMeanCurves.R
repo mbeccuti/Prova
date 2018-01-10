@@ -50,15 +50,30 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
     classification$meancurves->meancurves->Information$meancurves
   }
   classificate <- rep(classes,databaseTr$LenCurv)
-  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate,Info=rep(databaseTr$LabCurv[[paste(feature)]],databaseTr$LenCurv))
+  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate, Info=rep(databaseTr$LabCurv[[paste(feature)]],databaseTr$LenCurv))
   Information$ClustCurve <- data.frame(merge(curves[,1:4],databaseTr$LabCurv[,c("ID",feature)],by="ID"))
 
-  plot_data<-data.frame(time=rep(time,k),means=c(meancurves[,1:k]),clusters=rep(c(1:k),each=length(time)))
+  # cut the meancurves at the growth curves' maximum time
+  time1<-sort(unique(dati.tr$Dataset$Time))
+  meancurves_truncated<-c()
+  time3<-c()
+  cluster<-c()
+  for(clust in 1:k)
+  {
+    time2<-sort(unique(curves[curves$Cluster==clust,]$Times))
+    m<-meancurves[,clust][time1<=max(time2)]
+    time3<-c(time3,time1[time1<=max(time2)])
+    meancurves_truncated<-c(meancurves_truncated,m)
+    cluster<-c(cluster,rep(clust,length(time1[time1<=max(time2)])))
+  }
+
+
+
+  plot_data<-data.frame(time=time3,means=meancurves_truncated,clusters=cluster)
   PlotMeanCurveFCM<-ggplot()+
                     geom_line(data=plot_data, aes(x=time,y=means,group=clusters) )+
                     labs(title=paste(model," cluster mean curves"), x="Days", y = "Volume")+
                     theme(plot.title = element_text(hjust = 0.5))
- plots<-NULL
 
     col<-as.factor(unique(curves$Info))
     plots<-list()
@@ -67,7 +82,7 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
       plots[[paste(symbols[i],"Cluster")]]<-ggplot()+
         geom_line(data=plot_data[plot_data$clusters==i,], aes(x=time,y=means),size =1.3 )+
         labs(title=paste(model,"",symbols[i],"Cluster"), x="Days", y = "Volume")+
-        geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(feature)))+
+        geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(Info)))+
         scale_colour_manual(values = col,limits=col, name=paste(feature))+
         theme(plot.title = element_text(hjust = 0.5))
     }

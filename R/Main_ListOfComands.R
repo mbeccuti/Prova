@@ -30,14 +30,14 @@ source("R/cluster_choice.R")
 
 k=4
 
-out<-Cluster_choice(dati.tr$Dataset,K=k,h=NULL,pca$perc)
+out<-Cluster_choice(dati.tr$Dataset,K=k,h=2)
 
 source("R/ClusterWithMeanCurves.R")
 out.funcit <-out$FCM_all$`k= 4`$`h= 2`
 
-FCMplots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"FCM")
+FCMplots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"FCM")
 
-MalthusPlots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"Malthus")
+MalthusPlots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"Malthus")
 
 source("R/FittingAndClustering.R")
 

@@ -72,6 +72,10 @@ clustering<- function(databaseTr,k,model)
     # fitMalthus
     if(model=="Malthus")
     {
+      malthus<-function(x,t)
+      {
+        x[1]*exp(x[2]*t)
+      }
       lsmalthus <- function(x,t,y)
       {
 
