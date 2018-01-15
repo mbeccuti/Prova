@@ -37,21 +37,24 @@ TimeGridDensity <- function(alldata,save=FALSE,path=NULL)
   Time1 <- PointsCoord[,1]
   Time2 <- PointsCoord[,2]
   df <- data.frame(Time1=Time1,Time2=Time2,
-  d = densCols(Time1, Time2, colramp = colorRampPalette(rev(rainbow(10, end = 4/6)))))
+  d  <- densCols(Time1, Time2, colramp = colorRampPalette(rev(rainbow(10, end = 4/6)))))
 
   ### Plot density grid
   TimeGrid_plot <- ggplot(df) +
-      geom_point(aes(Time1, Time2), size = 2) +
-	    coord_fixed(ratio = 1) +
-      #scale_color_identity() +
-      theme_bw() +
-	    labs(title="Time grid",x="Time", y = "Time")+
-      theme(plot.title = element_text(hjust = 0.5),title =element_text(size=12, face='bold'))
+                   geom_point(aes(Time1, Time2,col=d), size = 4) +
+	               coord_fixed(ratio = 1) +
+                   scale_color_identity() +
+                   theme_bw() +
+	               labs(title="Time grid",x="Time", y = "Time")+
+                   theme(plot.title = element_text(hjust = 0.5),title =element_text(size=12, face='bold'))
 
   if(save==TRUE)
-  {
+  { 
+    if(is.null(path))
+	{
+	path <- getwd()
     ggsave(filename="TimeGrid.pdf",plot =TimeGrid_plot,width=29, height = 20, units = "cm",scale = 1,path=path )
+    }
   }
   return(TimeGrid_plot)
-
 }

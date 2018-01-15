@@ -11,9 +11,9 @@ source("R/DataImport.R")
 dati<-DataImport(file1,file2)
 
 source("R/GrowthCurve.R")
-source("R/DataTruncJ.R")
+source("R/DataTrunc.R")
 source("R/DataTruncation.R")
-dati.tr <- DataTruncation(alldata=dati,trunc.time=60,feature="Progeny",path="Data/")
+dati.tr <- DataTruncation(alldata=dati,truncTime=60,feature="Progeny",path="Data/")
 
 source("R/PCAbarplot.R")
 pca<-PCAbarplot(dati.tr$Dataset,save=TRUE)
@@ -27,9 +27,8 @@ out<-Cluster_choice(dati.tr$Dataset,K=k,h=NULL,pca$perc)
 source("R/ClusterWithMeanCurves.R")
 out.funcit <-out$FCM_all$`k= 4`$`h= 2`
 
-FCMplots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,All = TRUE,"FCM")
+FCMplots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"FCM")
 
-MalthusPlots<-ClusterWithMeanCurve_plot(out.funcit,databaseTr = dati.tr,Info = "Progeny",k = k,All = TRUE,"Malthus")
 
 source("R/FittingAndClustering.R")
 

@@ -3,7 +3,7 @@
 #' List of information on the truncated tumor growth curves
 #'
 #' @param alldata A list with 4 arguments : the DataStruncture() output list.
-#' @param truncTime An integer corresponding to the time at which truncate the curves. (TimeGridDensity() output suggests suitable candidates)
+#' @param truncTime An integer corresponding to the time at which truncate the curves. (TimeGridDensity() output suggests suitable candidates).
 #' @return A list of 4 arguments: equivalent to DataStructure() output list for truncated curve dataset.
 #' @examples
 #' @export

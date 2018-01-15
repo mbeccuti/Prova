@@ -3,6 +3,8 @@ library("grDevices")
 library("ggplot2")
 library("readxl")
 library("cowplot")
+source("R/cluster.symbol.R")
+source("R/fitfclust.R")
 
 file1<-"data/1864dataset.xls"
 file2<-"data/1864info.txt"
@@ -13,13 +15,13 @@ dati<-DataImport(file1,file2)
 
 source("R/TimeGridDensity.R")
 
-TimeGridDensity(dati,save=TRUE,path=NULL)
+TimeGridDensity(dati,save=TRUE)
 
 source("R/GrowthCurve.R")
 source("R/DataTruncation.R")
 source("R/DataVisualization.R")
 
-dati.tr <- DataTruncation(alldata=dati,trunc.time=60,feature="Progeny",save=TRUE,path="data")
+dati.tr <- DataTruncation(alldata=dati,truncTime=60,feature="Progeny",save=TRUE,path="data")
 
 DataVisualization(dati,feature="Progeny",save=TRUE,path="data")
 
@@ -35,9 +37,9 @@ out<-Cluster_choice(dati.tr$Dataset,K=k,h=2)
 source("R/ClusterWithMeanCurves.R")
 out.funcit <-out$FCM_all$`k= 4`$`h= 2`
 
-FCMplots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"FCM")
+FCMplots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,k = k,"FCM")
 
-MalthusPlots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,feature = "Progeny",k = k,"Malthus")
+MalthusPlots<-ClusterWithMeanCurve(out.funcit,databaseTr = dati.tr,k = k,"Malthus")
 
 source("R/FittingAndClustering.R")
 

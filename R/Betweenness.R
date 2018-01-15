@@ -1,4 +1,19 @@
-Betweenness <- function(ClustCurve,MeanCurves,centroids)
+#' Overall clusters betweenness
+#'
+#' Betweenness across all clusters is computed
+#'
+#' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
+#' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
+#' @param centroids A logical value for specifying how to compute betweenness. If "centroids" equals TRUE (default value), BetweenCluster_MeanDist() function is used, otherwise withinness is calculated using BetweenCluster_CurvDist().
+#' @return A list with 4 arguments (if "centroids" equals TRUE): Betweenness is a matrix with 2 columns, the minimum cluster distance and the cluster name that achieves the minimum;
+#'                                                               CentroidDist is a K x K matrix (where K is the cluster number) containing centroids cluster distance among each cluster couple;
+#'                                                               Classes a vector containing the cluster name membership for each dataset curve.
+#'         A list with 3 arguments (if "centroids" equals FALSE): NearDist is a matrix containing, for each cluster, the nearest curve distance, ID and cluster membership across all clusters ;
+#'                                                                FarDist is a matrix containing, for each cluster, the farthest curve distance, ID and cluster membership across all clusters;
+#'                                                                Classes a vector containing the cluster name membership for each dataset curve.
+#' @examples
+#' @export
+Betweenness <- function(ClustCurve,MeanCurves,centroids=TRUE)
 {
   K <- length(unique(ClustCurve[,4]))
   ClustSymbol <- cluster.symbol(K)
@@ -15,13 +30,16 @@ Betweenness <- function(ClustCurve,MeanCurves,centroids)
 	 Betweenness.i <- BetweenCluster_CurvDist(ClustCurve,i)
 	 near.curve <- Betweenness.i$NearCurve
      far.curve <- Betweenness.i$FarCurve
-	 for (j in seq(1,3*(K-1),3))
 	 count <- 1
+	 index <- seq(1,3*(K-1),3)
+	 for (j in index)
 	 {
-	 between.near[i,j[count]:(j[count]+2)] <- c(t(Betweenness.i$Between[count,1]),near.curve[count],ClustSymbol[ClassCurve[near.curve]][count])
-	 between.far[i,j[count]:(j[count]+2)] <- c(t(Betweenness.i$Between[count,2]),far.curve[count],ClustSymbol[ClassCurve[far.curve]][count])}
+	 between.near[i,j[count]:(j[count]+2)] <- c(t(Betweenness.i$Between[,1]),near.curve,ClustSymbol[ClassCurve[near.curve]])
+	 between.far[i,j[count]:(j[count]+2)] <- c(t(Betweenness.i$Between[,2]),far.curve,ClustSymbol[ClassCurve[far.curve]])
+	 }
 	 count <- count + 1
 	 }
+	 
    return(list(NearDist=between.near,FarDist=between.far,Classes=classes))
   }
 

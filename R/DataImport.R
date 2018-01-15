@@ -1,12 +1,12 @@
 #' Data Import
 #'
 #'@description
-#' DataImport() is the function utilezed to read the files containing the obeserved values and the features in order
-#' to build a list storing all the informantions.
+#' DataImport() is the function for reading the files containing the observed values and the features in order
+#' to build a list storing all the information.
 #'
 #'
-#' @param file1 File1 is a .xls file name with observed values and the respective times.
-#' @param file2 File2 is a .txt file name storing the curves' feature.
+#' @param file1 File1 is a .xls file name with observed values and the corresponding observations times.
+#' @param file2 File2 is a .txt file name containing ID curves and corresponding features.
 #' @return List with 4 arguments: a data frame with 3 variables (ID curves, volume and time values), a vector for curves lengths,
 #'         a data frame with curves labeled according to target file features and a vector for overall time grid.
 #' @examples to write...

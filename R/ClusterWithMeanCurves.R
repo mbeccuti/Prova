@@ -15,7 +15,6 @@
 #'                that might be truncated at a specific time or not.
 #'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
 #'                a truncation time.
-#' @param feature String feature name, stored in the target file, to plot curves according to.
 #' @param k Number of clusters.
 #' @param model String model name, it is possible to choose one among FCM, Malthus, Gompertz and Logistic models.
 #' @return List containing the cluster mean curves plot for the model choosen, the k growth curves plots divided
@@ -26,7 +25,7 @@
 #'
 #' @import ggplot2, cowplot
 #' @export
-ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
+ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
 {
   # source("R/fitfclust.R")
   # source("R/Residuals.R")
@@ -36,6 +35,7 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
   symbols<-cluster.symbol(k)
   Information<-list()
   time <- sort(unique(databaseTr$Dataset$Time))
+  feature <- colnames(databaseTr$LabCurv)[2]
 
   if(model=="FCM")
   {
@@ -50,8 +50,8 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
     classification$meancurves->meancurves->Information$meancurves
   }
   classificate <- rep(classes,databaseTr$LenCurv)
-  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate, Info=rep(databaseTr$LabCurv[[paste(feature)]],databaseTr$LenCurv))
-  Information$ClustCurve <- data.frame(merge(curves[,1:4],databaseTr$LabCurv[,c("ID",feature)],by="ID"))
+  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate, Info=rep(t(databaseTr$LabCurv[feature]),databaseTr$LenCurv))
+  Information$ClustCurve <- data.frame(merge(curves[,1:4],databaseTr$LabCurv,by="ID"))
 
   # cut the meancurves at the growth curves' maximum time
   time1<-sort(unique(dati.tr$Dataset$Time))
@@ -83,7 +83,7 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,feature,k,model)
         geom_line(data=plot_data[plot_data$clusters==i,], aes(x=time,y=means),size =1.3 )+
         labs(title=paste(model,"",symbols[i],"Cluster"), x="Days", y = "Volume")+
         geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(Info)))+
-        scale_colour_manual(values = col,limits=col, name=paste(feature))+
+        scale_colour_manual(values = col,limits=col, name=feature)+
         theme(plot.title = element_text(hjust = 0.5))
     }
      plots[["ALL"]]<-plot_grid(plotlist = plots)
