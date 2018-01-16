@@ -23,7 +23,6 @@
 #' @export
 PCAbarplot <- function(data.matrix,save=FALSE,path=NULL)
 {
-  source("R/makeCoeffs.R")
   TimeGrid <- c(1:max(data.matrix[,3]))
 
   # curves splines basis coefficients
