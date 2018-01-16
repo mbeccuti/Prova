@@ -7,7 +7,7 @@
 #' @param save A logical value. If "save" equals TRUE the plot is saved in a pdf file (the default is FALSE).
 #' @param path A character string for saving plot path folder .If "save" is TRUE and "path" is missing, the plot is saved in the current directory.
 #' @examples
-#' @import ggplot2, ggforce
+#' @import ggplot2 ggforce
 #' @export
 PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
 {
@@ -57,7 +57,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
   for(k in 1:K)
   {
   ### Data frames
-  dataplot <- DataFrameWithiness.i(ClustCurve,MeanCurves,i[k],shift=cumsum(shift)[i[k]])
+  dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i[k],shift=cumsum(shift)[i[k]])
   circles[index[k,],] <- dataplot$circles
   WithDist[counter:(cumsum(cluster.magnitudo)[i[k]]),] <- dataplot$WithDist
   counter <- cumsum(cluster.magnitudo)[i[k]] + 1

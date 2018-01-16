@@ -42,6 +42,7 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NU
   out$MeanCurves<-plot_grid(plotlist = mcurves)
   if(save==TRUE)
   {
+     if(is.null(path)) path <- getwd()
      ggsave(filename="MeanCurves.pdf",plot =out$MeanCurves,width=29, height = 20, units = "cm",scale = 1,path = path )
      ggsave(filename = "FCMCluster.pdf",plot=out$FCM$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1,path = path)
      ggsave(filename = "MalthusCluster.pdf",plot=out$Malthus$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1,path = path)

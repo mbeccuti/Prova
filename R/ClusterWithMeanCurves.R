@@ -23,7 +23,7 @@
 #' @examples
 #'
 #'
-#' @import ggplot2, cowplot
+#' @import ggplot2 cowplot
 #' @export
 ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
 {
@@ -54,7 +54,7 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
   Information$ClustCurve <- data.frame(merge(curves[,1:4],databaseTr$LabCurv,by="ID"))
 
   # cut the meancurves at the growth curves' maximum time
-  time1<-sort(unique(dati.tr$Dataset$Time))
+  time1<-sort(unique(databaseTr$Dataset$Time))
   meancurves_truncated<-c()
   time3<-c()
   cluster<-c()
