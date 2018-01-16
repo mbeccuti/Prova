@@ -23,7 +23,7 @@ Betweenness <- function(ClustCurve,MeanCurves,centroids=TRUE)
   {
    between.near <- matrix(numeric(K*3*(K-1)),ncol=3*(K-1))
    rownames(between.near) <- paste("cluster",ClustSymbol)
-   colnames(between.near) <- rep(c("Distance","ID","cluster"),3)
+   colnames(between.near) <- rep(c("ID","Distance","cluster"),3)
    between.far <- between.near
    for (i in 1:K)
     {

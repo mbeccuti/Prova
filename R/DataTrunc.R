@@ -22,6 +22,7 @@ DataTrunc <- function(alldata,truncTime=NULL)
    timegrid.tr <- alldata$TimeGrid[alldata$TimeGrid<=truncTime]
    alldata.tr=list(Dataset=dataset.tr,LenCurv=lencurv.tr,LabCurv=alldata$LabCurv,TimeGrid=timegrid.tr)
   }
+
   else alldata.tr <- alldata
 
   return(alldata.tr)

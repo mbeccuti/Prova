@@ -1,7 +1,20 @@
-PlotWithinness.i <- function(ClustCurve,MeanCurves,i,centroids=TRUE,shift=0)
+#' i-th cluster withinness plot
+#'
+#' Plot i-th cluster withinness measure circles 
+#'
+#' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
+#' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
+#' @param i a numerical value for the cluster involved in withinness computation
+#' @param centroids A logical value for specifying how to compute withinness. If "centroids" equals TRUE (default value), WithCluster_MeanDist() function is used, otherwise withinness is calculated using WithCluster_CurvDist().
+#' @param shift A numerical value at which center withinness circles. 
+#' @return plot.i A ggplot() object for i-th cluster withinness measures circles
+#' @examples
+#' @import ggforce
+#' @export
+
+PlotWithinness.i <- function(ClustCurve,MeanCurves,i,shift=0)
 {
-  library(ggforce)
-  dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i,centroids=centroids,shift=shift)
+  dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i,shift=shift)
   ### Data frame for plot
   circles <- dataplot$circles
   WithDist <- dataplot$WithDist

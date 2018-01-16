@@ -5,6 +5,7 @@ library("readxl")
 library("cowplot")
 source("R/cluster.symbol.R")
 source("R/fitfclust.R")
+library("fda")
 
 file1<-"data/1864dataset.xls"
 file2<-"data/1864info.txt"
@@ -21,9 +22,7 @@ source("R/GrowthCurve.R")
 source("R/DataTruncation.R")
 source("R/DataVisualization.R")
 
-dati.tr <- DataTruncation(alldata=dati,truncTime=60,feature="Progeny",save=TRUE,path="data")
-
-DataVisualization(dati,feature="Progeny",save=TRUE,path="data")
+dati.tr <- DataTruncation(alldata=dati,feature="Progeny",truncTime=60)
 
 source("R/PCAbarplot.R")
 pca<-PCAbarplot(dati.tr$Dataset,save=TRUE,path="data")
@@ -49,7 +48,8 @@ source("R/haus.R")
 source("R/cluster.symbol.R")
 
 ### Withinness
-source("R/WithinnessInternal.R")
+source("R/WithCluster_CurvDist.R")
+source("R/WithCluster_MeanDist.R")
 ClustCurve <- FCMplots$Information$ClustCurve
 MeanCurves <- FCMplots$Information$meancurves
 
@@ -57,7 +57,8 @@ source("R/Withinness.R")
 Withinness(ClustCurve,MeanCurves,centroids=FALSE) -> wt
 
 ### Betweenness
-source("R/BetweennessInternal.R")
+source("R/BetweenCluster_CurvDist.R")
+source("R/BetweenCluster_MeanDist.R")
 BetweenCluster_CurvDist(ClustCurve,i)
 BetweenCluster_MeanDist(ClustCurve,MeanCurves,i)
 source("R/Betweenness.R")

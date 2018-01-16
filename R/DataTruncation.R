@@ -11,12 +11,13 @@
 #'         truncated at the truncation time), a vector for truncated curves lengths,a data frame with curves labeled according to target file feature chosen and a vector for overall truncated time grid.
 #'         If "save" equals TRUE, a pdf file containing the plot is returned too.
 #' @export
-DataTruncation <- function(alldata,truncTime=NULL,feature,save=FALSE,path=NULL)
+DataTruncation <- function(alldata,feature,truncTime=NULL,save=FALSE,path=NULL)
 {
 ### Variables initialization
 growth.curve.ls <- GrowthCurve(alldata,feature)
 ### Plot growth curves with truncation time
-growth.curve.tr <- growth.curve.ls$GrowthCurve_plot + geom_vline(xintercept=truncTime, color="black", size=1)
+growth.curve.tr <- growth.curve.ls$GrowthCurve_plot 
+if(! is.null(truncTime)) growth.curve.tr <- growth.curve.tr + geom_vline(xintercept=truncTime, color="black", size=1)
 
 if(save==TRUE)
 {
@@ -33,14 +34,10 @@ sample.size <- max(unique(dataset[,1]))
 lencurv.tr <- numeric(sample.size)
 
 # Data truncation
-if(!is.null(truncTime))
-{
-  dataset.tr <- dataset[dataset[,3]<=truncTime,]
-  for (i in 1:sample.size)  lencurv.tr[i]<-length(dataset.tr[,1][dataset.tr[,1]==i])
-  timegrid.tr <- alldata$TimeGrid[alldata$TimeGrid<=truncTime]
-  alldata.tr=list(Dataset=dataset.tr,LenCurv=lencurv.tr,LabCurv=alldata$LabCurv[c("ID",feature)],TimeGrid=timegrid.tr)
-}
+if(!is.null(truncTime)) alldata.tr <- DataTrunc(alldata,truncTime=truncTime)
 else alldata.tr <- alldata
+ 
+alldata.tr$LabCurv <- alldata.tr$LabCurv[c("ID",feature)]
 
 plot(growth.curve.tr)
 
