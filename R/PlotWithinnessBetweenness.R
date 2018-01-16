@@ -18,7 +18,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
   feature.palette <- rainbow(nfeature+3)
   feature.lev <- sort(unique(ClustCurve[,5]))
   within.all <- Withinness(ClustCurve,MeanCurves,centroids=TRUE)
-  between.all <- Betweenness(ClustCurve,MeanCurves,centroids=TRUE)$Betweenness
+  between.all <- Betweenness(ClustCurve,MeanCurves)$Betweenness
   linked <- cbind(ClustSymbol,NearestClust=between.all[,2])
   linked <- t(apply(linked,1,sort))
   betweenness <- between.all[duplicated(linked)==FALSE,]
@@ -57,7 +57,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
   for(k in 1:K)
   {
   ### Data frames
-  dataplot <- DataFrameWithiness.i(ClustCurve,MeanCurves,i[k],centroids=TRUE,shift=cumsum(shift)[i[k]])
+  dataplot <- DataFrameWithiness.i(ClustCurve,MeanCurves,i[k],shift=cumsum(shift)[i[k]])
   circles[index[k,],] <- dataplot$circles
   WithDist[counter:(cumsum(cluster.magnitudo)[i[k]]),] <- dataplot$WithDist
   counter <- cumsum(cluster.magnitudo)[i[k]] + 1

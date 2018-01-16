@@ -1,5 +1,16 @@
-# Hausdorff distance
+#' Hausdorff distance
+#'
+#' @param A A set.
+#' @param B A set.
+#' @return The hausdorff distance between \code{A} and \code{B}.
+#' @examples
+#' @export
 
+hausdorff <- function(A,B)
+{
+  H <- max(distance(A,B),distance(B,A))
+  return(H)
+}
 
 eucl.dist <- function(x) {sqrt(sum(x^2))}
 # A, B vettori
@@ -19,10 +30,4 @@ distance <- function(A,B)
           a[i] <- min(b)
       }
    return(max(a))
-}
-
-hausdorff <- function(A,B)
-{
-  H <- max(distance(A,B),distance(B,A))
-  return(H)
 }

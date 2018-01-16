@@ -20,7 +20,6 @@
 #'         the vector of percentages.
 #' @examples to write...
 #' @import ggplot2
-#' @import funcit::makeCoeffs
 #' @export
 PCAbarplot <- function(data.matrix,save=FALSE,path=NULL)
 {

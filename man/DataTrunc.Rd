@@ -4,15 +4,15 @@
 \alias{DataTrunc}
 \title{Truncated tumor growth curves dataset}
 \usage{
-DataTrunc(dataset, truncTime = NULL)
+DataTrunc(alldata, truncTime = NULL)
 }
 \arguments{
-\item{truncTime}{An integer corresponding to the time at which truncate the curves. (Create.TimeGrid() output suggests suitable candidate)}
+\item{alldata}{A list with 4 arguments : the DataStruncture() output list.}
 
-\item{data}{A list with 4 arguments : the DataStruncture() output list.}
+\item{truncTime}{An integer corresponding to the time at which truncate the curves. (TimeGridDensity() output suggests suitable candidates).}
 }
 \value{
-A list of 2 arguments: the matrix of truncated data and the vector of truncated curves lengths
+A list of 4 arguments: equivalent to DataStructure() output list for truncated curve dataset.
 }
 \description{
 List of information on the truncated tumor growth curves

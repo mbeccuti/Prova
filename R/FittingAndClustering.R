@@ -34,7 +34,7 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NU
   models<-c("FCM","Malthus","Gompertz","Logistic")
   for(i in models)
   {
-    out[[paste(i)]]<-ClusterWithMeanCurve(out.funcit,databaseTr,feature =feature,k,i)
+    out[[paste(i)]]<-ClusterWithMeanCurve(out.funcit,databaseTr,k,i)
 
   }
 

@@ -12,9 +12,7 @@
 #'             the growth curves plot in a pdf.
 #' @param path Path to save plot to (combined with filename).
 #' @return alldata list DataImport() output with feature color palette.
-#' @import gridExtra
-#' @importFrom ggplot2 ggsave
-#' @importFrom cowplot plot_grid
+#' @import gridExtra, ggplot2, cowplot
 #' @export
 DataVisualization <- function(alldata,feature,save=FALSE,path=NULL)
 {

@@ -6,9 +6,7 @@
 #' @param K Number of clusters, it could be a vector.
 #' @return  Vector of K symbols.
 #' @examples
-#'
-#'
-#' @import
+#' @export
 cluster.symbol <- function(K)
 {
 symbol.matrix <- cbind(paste("pch=",seq(0:20),sep=""),
