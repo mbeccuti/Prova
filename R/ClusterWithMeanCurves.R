@@ -17,6 +17,7 @@
 #'                a truncation time.
 #' @param k Number of clusters.
 #' @param model String model name, it is possible to choose one among FCM, Malthus, Gompertz and Logistic models.
+#' @param feature String feature name, stored in the target file, to plot curves according to.
 #' @return List containing the cluster mean curves plot for the model choosen, the k growth curves plots divided
 #'        depending on the cluster and a list of informations about the model clustered. The information list stores
 #'        the mean cluster.
@@ -25,7 +26,7 @@
 #'
 #' @import ggplot2 cowplot
 #' @export
-ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
+ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model,feature)
 {
   # source("R/fitfclust.R")
   # source("R/Residuals.R")
@@ -35,14 +36,14 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
   symbols<-cluster.symbol(k)
   Information<-list()
   time <- sort(unique(databaseTr$Dataset$Time))
-  feature <- colnames(databaseTr$LabCurv)[2]
 
   if(model=="FCM")
   {
     Cluster(out.funcit)->classes->Information$classes
     out.fit<-out.funcit@models$fitfclust@fit
+
     # Check if it is regular
-    if(out.funcit$reg==1)
+    if(out.funcit@reg==1)
     {
       fitfclust.curvepred(out.fit)$meancurves->meancurves->Information$meancurves
     } else{
