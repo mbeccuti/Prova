@@ -14,7 +14,7 @@
 #' @export
 DataImport <- function(file1,file2) {
  ###Read Data File
-  dataset <- read_xls(file1,col_names=T)
+  dataset <- read_excel(file1,col_names=T)
 
   ### Inizialize :
   ### vector for curves lenghts
