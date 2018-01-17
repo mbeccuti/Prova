@@ -2,18 +2,33 @@
 % Please edit documentation in R/PCAbarplot.R
 \name{PCAbarplot}
 \alias{PCAbarplot}
-\title{Principal Components Analysis bar plot}
+\title{PCA Bar Plot}
 \usage{
-PCAbarplot(data.matrix, save = FALSE)
+PCAbarplot(data.matrix, save = FALSE, path = NULL)
 }
 \arguments{
-\item{data.matrix}{A matrix with 3 columns: curve ID, volume and time measures.}
+\item{data.matrix}{Matrix with 3 columns: curve ID, volume and time measures.}
 
-\item{save}{A logical constant.}
+\item{save}{When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
+the growth curves plot in a pdf.}
+
+\item{path}{Path to save plot to (combined with filename).}
 }
 \value{
-The plot of the variances against the number of the principal component.
+List containing the plot of the variances against the number of the principal component and
+        the vector of percentages.
 }
 \description{
-Add a dataset of ID, vol and time measures and choose to save or not the PCA bar plot.
+PCAbarplot() is used to choice the dimension of the cluster mean space, h.
+The PCA method performs an accurate analysis to determine whether the means lie in a lower
+dimensional space, note that if h is equal to the number of cluster menus one, does not produce restriction on the mean
+space.
+To estimate h the Principal Component Analysis (PCA) is applied to the spline coefficients provided
+for each curves by the functional clustering model.
+It generates a bar plot indicating with how much percentage the principal components explain
+the variability in the data.
+Usually the components are choosen if the sum of the respective percentages is greater than 95 percent.
+}
+\examples{
+to write...
 }

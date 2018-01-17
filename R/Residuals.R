@@ -10,7 +10,6 @@
 #' @return A list in which is stored the residuals, quadratic residuals, the curve fitted in both the
 #' observation times and all times.
 #' @examples
-#'Residuals("Malthus",time,Vol,par,"TRUE")
 #'
 #' @export
 Residuals<- function(model,time,Vol,par,plot)

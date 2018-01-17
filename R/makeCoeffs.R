@@ -3,12 +3,12 @@
 #' @description
 #' makeCoeffs() function returns the data coefficients with respect to a base type chosen.
 #'
-#' @importFrom fda create.bspline.basis
+#' @import fda
 #' @export
 makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert){
   if(is.null(base)){
     time<-grid
-    nbasis<dimBase
+    nbasis <- dimBase
     m <- length(time)
     bObj <-  create.bspline.irregular(c(time[1],time[m]),
                                       nbasis=nbasis,

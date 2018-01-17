@@ -1,11 +1,12 @@
+#' Overall Clusters withinness
 #'
-#' @param
-#' @param
-#' @param
-#' @return
+#' Withinness across all clusters is computed
+#'
+#' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
+#' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
+#' @param centroids A logical value for specifying how to compute withinness. If "centroids" equals TRUE (default value), WithCluster_MeanDist() function is used, otherwise withinness is calculated using WithCluster_CurvDist().
+#' @return withinness a numeric matrix with 4 columns: mean, standard deviation, minimum and maximum withinness distance across distinct clusters.
 #' @examples
-#'
-#' @import cluster.symbol
 #' @export
 Withinness <- function(ClustCurve,MeanCurves,centroids=TRUE)
 {

@@ -12,9 +12,7 @@
 #'             the growth curves plot in a pdf.
 #' @param path Path to save plot to (combined with filename).
 #' @return alldata list DataImport() output with feature color palette.
-#' @import gridExtra
-#' @importFrom ggplot2 ggsave
-#' @importFrom cowplot plot_grid
+#' @import ggplot2 cowplot
 #' @export
 DataVisualization <- function(alldata,feature,save=FALSE,path=NULL)
 {
@@ -24,10 +22,10 @@ DataVisualization <- function(alldata,feature,save=FALSE,path=NULL)
  plot1 <- growth.curves$GrowthCurve_plot
  plot2 <- TimeGridDensity(alldata)
 
+ plots <- plot_grid(plotlist=list(plot1 , plot2))
 
  if(save==TRUE)
  {
-     plots<-plot_grid(plotlist=list(plot1 , plot2))
      ggsave(filename="DataVisualization.pdf",plot =plots,width=29, height = 20, units = "cm",scale = 1,path=path )
  }
  return(plots)

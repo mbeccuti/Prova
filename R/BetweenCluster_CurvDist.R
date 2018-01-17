@@ -1,3 +1,14 @@
+#' i-th cluster betweenness
+#'
+#' Hausdorff distance between i-th cluster meancurve and other clusters meancurves
+#'
+#' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
+#' @param i a numeric value for the cluster involved in withinness computation
+#' @return a list with 4 arguments: CurveDistance is matrix for each curve hausdorff distance from each i-th cluster curves;
+#' Between is a matrix for minimum and maximum hausdorff distance of i-th cluster curves from the other clusters;
+#' NearCurveID and FarCurveID are the nearest and the farthest dataset curves from the i-th cluster.
+#' @examples
+#' @export
 BetweenCluster_CurvDist <- function(ClustCurve,i)
 {
 
@@ -67,42 +78,7 @@ BetweenCluster_CurvDist <- function(ClustCurve,i)
   return(list(CurveDistance=dist.info,Between=between.i,NearCurveID=near.curve,FarCurveID=far.curve))
 }
 
-BetweenCluster_MeanDist <- function(ClustCurve,MeanCurves,i)
-{
-  K <- length(unique(ClustCurve[,4]))
-  ClustSymbol <- cluster.symbol(K)
-  TimeGrid <- sort(unique(ClustCurve[,2]))
-  ### i-th cluster curves data
-  ClustCurve.i <- ClustCurve[ClustCurve[,4]==i,]
-  ### i-th cluster max obs time
-  tmax <- max(ClustCurve.i[,2])
-  ### i-th cluster meancurve truncated at tmax
-  MeanCurve.i <- MeanCurves[TimeGrid <= tmax,i]
-  ### i-th cluster obs time grid
-  TimeGrid.i <- TimeGrid[TimeGrid <= tmax]
-  ### i-th cluster meancurve
-  A <- cbind(TimeGrid.i,MeanCurve.i)
-  ### other clusters
-  other.cluster <- sort(unique(ClustCurve[-which(ClustCurve[,4]==i),4]))
 
-  ### Betweenness centroid dist.curveance
-  betweencentroid.i <- matrix(numeric(length(other.cluster)),nrow=1)
-  count <- 1
-  for (j in other.cluster)
-   {
-    ClustCurve.j <- ClustCurve[ClustCurve[,4]==j,]
-    tmax.j <- max(ClustCurve.j[,2])
-    MeanCurve.j <- MeanCurves[TimeGrid <= tmax.j,j]
-    TimeGrid.j <- TimeGrid[TimeGrid <= tmax.j]
-    B <- cbind(TimeGrid.j,MeanCurve.j)
-    betweencentroid.i[count] <- hausdorff(A,B)
-	count <- count +1
-   }
-   between <- matrix(numeric(K),nrow=1)
-   between[,-i] <- betweencentroid.i
-   colnames(between) <- paste(ClustSymbol,"dist")
-  return(BetweenCentr=between)
-}
 
 
 
