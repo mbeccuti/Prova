@@ -41,7 +41,13 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
   {
     Cluster(out.funcit)->classes->Information$classes
     out.fit<-out.funcit@models$fitfclust@fit
-    fitfclust.curvepredIrreg(out.fit)$meancurves->meancurves->Information$meancurves
+    # Check if it is regular
+    if(out.funcit$reg==1)
+    {
+      fitfclust.curvepred(out.fit)$meancurves->meancurves->Information$meancurves
+    } else{
+      fitfclust.curvepredIrreg(out.fit)$meancurves->meancurves->Information$meancurves
+    }
   }
   else{
     clustering(databaseTr,k,model) ->classification
@@ -83,7 +89,7 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model)
         geom_line(data=plot_data[plot_data$clusters==i,], aes(x=time,y=means),size =1.3 )+
         labs(title=paste(model,"",symbols[i],"Cluster"), x="Days", y = "Volume")+
         geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(Info)))+
-        scale_colour_manual(values = col,limits=col, name=feature)+
+        scale_colour_manual(values = col, name=feature)+
         theme(plot.title = element_text(hjust = 0.5))
     }
      plots[["ALL"]]<-plot_grid(plotlist = plots)
