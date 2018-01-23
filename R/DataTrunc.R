@@ -16,8 +16,11 @@ DataTrunc <- function(alldata,truncTime=NULL)
    lencurv.tr <- numeric(sample.size)
 
    # Data truncation
+
   if(!is.null(truncTime))
   {
+    max.time<-max(dataset[,3])
+    if(max.time<truncTime)  warning("Truncation time greater than maximum time in the dataset.")
    dataset.tr <- dataset[dataset[,3]<=truncTime,]
    for (i in 1:sample.size)  lencurv.tr[i]<-length(dataset.tr[,1][dataset.tr[,1]==i])
    timegrid.tr <- alldata$TimeGrid[alldata$TimeGrid<=truncTime]
