@@ -15,6 +15,24 @@
 DataImport <- function(file1,file2) {
  ###Read Data File
   dataset <- read_excel(file1,col_names=T)
+ ### Read Target File
+  labcurv  <- read.csv(file=file2,header=TRUE)
+
+ ###Check the column names
+  c_names<-colnames(dataset[2*(1:(length(dataset[1,])/2))])
+  if(length(c_names)!=(length(labcurv$ID)/2))
+  {
+    warning("Number of columns in the excel file is different from the number of curves stored in the target file.")
+
+  }else{
+
+    if(all(c_names==labcurv$SampleName)==FALSE)
+    {
+      warning("SampleNames in the target file do not correspond to the names in the excel file.")
+    }
+  }
+
+
 
   ### Inizialize :
   ### vector for curves lenghts
@@ -64,9 +82,6 @@ DataImport <- function(file1,file2) {
   times    <- times[1:ndata]
   ID       <- ID[1:ndata]
   timegrid <- 1:max(times)
-
-  ### Read Target File
-  labcurv  <- read.csv(file=file2,header=TRUE)
 
   ### ID, volume and time data frame
 
