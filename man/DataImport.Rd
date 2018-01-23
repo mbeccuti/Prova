@@ -7,9 +7,9 @@
 DataImport(file1, file2)
 }
 \arguments{
-\item{file1}{File1 is a .xls file name with observed values and the corresponding observations times.}
+\item{file1}{is the name of the cvs file containing the observed values and the corresponding observations times.}
 
-\item{file2}{File2 is a .txt file name containing ID curves and corresponding features.}
+\item{file2}{is a .txt file name containing ID curves and corresponding features.}
 }
 \value{
 List with 4 arguments: a data frame with 3 variables (ID curves, volume and time values), a vector for curves lengths,

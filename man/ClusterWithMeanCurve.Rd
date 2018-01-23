@@ -4,7 +4,7 @@
 \alias{ClusterWithMeanCurve}
 \title{Mean Cluster Curves}
 \usage{
-ClusterWithMeanCurve(out.funcit, databaseTr, k, model)
+ClusterWithMeanCurve(out.funcit, databaseTr, k, model, feature)
 }
 \arguments{
 \item{out.funcit}{Object of class funcyOutList, obtained by the function funcit from the package
@@ -20,6 +20,8 @@ a truncation time.}
 \item{k}{Number of clusters.}
 
 \item{model}{String model name, it is possible to choose one among FCM, Malthus, Gompertz and Logistic models.}
+
+\item{feature}{String feature name, stored in the target file, to plot curves according to.}
 }
 \value{
 List containing the cluster mean curves plot for the model choosen, the k growth curves plots divided
