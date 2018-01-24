@@ -10,4 +10,4 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: deSolve, cowplot, fda, funcy, ggforce, grofit, readxl
+Imports: cowplot, fda, funcy, ggforce, grofit, readxl

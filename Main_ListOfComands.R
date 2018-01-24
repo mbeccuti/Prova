@@ -1,8 +1,8 @@
 library(Prova1)
 
 ### Data files
-curve_file <-"data/1864dataset.xls"
-target_file <-"data/1864info.txt"
+curve_file <-"/home/pernice/Desktop/prove nico/files/matriXCluster_IC1_Pt1_ADP.xlsx"
+target_file <-"/home/pernice/Desktop/prove nico/files/InfoCurvesXCluster_IC1_Pt1.txt"
 
 ### Merge curves and target file
 data <- DataImport(curve_file,target_file)
@@ -20,7 +20,7 @@ out <- Cluster_choice(data.tr$Dataset,K=k,h=2)
 
 out.funcit <- out$FCM_all$`k= 4`$`h= 2`
 
-FCMplots <- ClusterWithMeanCurve(out.funcit,databaseTr = data.tr,k = k,"FCM")
+FCMplots <- ClusterWithMeanCurve(out.funcit,databaseTr = data.tr,k = k,"FCM",feature = "Progeny")
 
 MalthusPlots<- ClusterWithMeanCurve(out.funcit,databaseTr = data.tr,k = k,"Malthus")
 

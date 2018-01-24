@@ -82,7 +82,8 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model,feature)
                     labs(title=paste(model," cluster mean curves"), x="Days", y = "Volume")+
                     theme(plot.title = element_text(hjust = 0.5))
 
-    col<-as.factor(unique(curves$Info))
+    col<-as.character(unique(curves$Info))
+    col1<-rainbow(length(col))
     plots<-list()
     for(i in 1:k)
     {
@@ -90,7 +91,7 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model,feature)
         geom_line(data=plot_data[plot_data$clusters==i,], aes(x=time,y=means),size =1.3 )+
         labs(title=paste(model,"",symbols[i],"Cluster"), x="Days", y = "Volume")+
         geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(Info)))+
-        scale_colour_manual(values = col, name=feature)+
+        scale_colour_manual(values = col1,limits=col,breaks=col,name=feature)+
         theme(plot.title = element_text(hjust = 0.5))
     }
      plots[["ALL"]]<-plot_grid(plotlist = plots)
