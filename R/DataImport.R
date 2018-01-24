@@ -1,12 +1,13 @@
 #' Data Import
 #'
 #'@description
-#' DataImport() is the function for reading the files containing the observed values and the features in order
-#' to build a list storing all the information.
+#' Reads the files in a table format and create a list storing all the information.
 #'
 #'
-#' @param file1 is the name of the cvs file containing the observed values and the corresponding observations times.
-#' @param file2 is a .txt file name containing ID curves and corresponding features.
+#'
+#' @param file1 the name of the excel file which the data are to be read from. The growth data associated with an experiment must be reported using a pair of columns. The first column must contains the time points, the header . The second column must contains the data volume, the header is the sample name. The colnames
+#'
+#' @param file2 the name of a cvs file which the annontation data are reported. Each row of the file containes the sample names file name containing ID curves and corresponding features.
 #' @return List with 4 arguments: a data frame with 3 variables (ID curves, volume and time values), a vector for curves lengths,
 #'         a data frame with curves labeled according to target file features and a vector for overall time grid.
 #' @examples to write...
