@@ -65,7 +65,7 @@ DataImport <- function(file1,file2) {
     {
       vol[1:lencurv[cappa]]    <- tempv
       times[1:lencurv[cappa]]  <- tempt
-      ID[1:lencurv[cappa]] <- cappa
+
     }
 
     else
@@ -73,14 +73,13 @@ DataImport <- function(file1,file2) {
       lcum <- cumsum(lencurv)
       vol[(lcum[cappa-1]+1):lcum[cappa]] <- tempv
       times[(lcum[cappa-1]+1):lcum[cappa]] <- tempt
-      ID[(lcum[cappa-1]+1):lcum[cappa]] <- cappa
     }
   }
 
   ndata    <- sum(lencurv)
   vol      <- vol[1:ndata]
   times    <- times[1:ndata]
-  ID       <- ID[1:ndata]
+  ID       <- rep(labcurv$ID,times=lencurv)
   timegrid <- 1:max(times)
 
   ### ID, volume and time data frame
