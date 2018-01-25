@@ -20,7 +20,7 @@ DataImport <- function(file1,file2) {
 
  ###Check the column names
   c_names<-colnames(dataset[2*(1:(length(dataset[1,])/2))])
-  if(length(c_names)!=(length(labcurv$ID)/2))
+  if(length(c_names)!=(length(labcurv$ID)))
   {
     warning("Number of columns in the excel file is different from the number of curves stored in the target file.")
 
@@ -55,10 +55,10 @@ DataImport <- function(file1,file2) {
   ### Organize times, volume and ID curves values, removing NA
   for (cappa in 1:samplesize)
   {
-    tempv <- VolValue[,cappa]
+    tempv <- as.double(VolValue[,cappa])
     tempv <- tempv[!is.na(tempv)]
     lencurv[cappa] <- length(tempv)
-    tempt <-TimeValue[,cappa]
+    tempt <-as.double(TimeValue[,cappa])
     tempt <-tempt[!is.na(tempt)]
 
     if (cappa == 1)
