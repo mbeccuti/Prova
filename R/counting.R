@@ -20,7 +20,6 @@ CountingSamples<-function(cluster,Model=NULL)
    Model<-c("FCM","Malthus","Gompertz","Logistic")
  }
 
-
  Counting<-list()
 
  for( i in Model)

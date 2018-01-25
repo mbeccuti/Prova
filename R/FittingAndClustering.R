@@ -49,5 +49,6 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NU
      ggsave(filename = "GompertzCluster.pdf",plot=out$Gompertz$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1,path = path)
      ggsave(filename = "LogisticCluster.pdf",plot=out$Logistic$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1,path = path)
   }
+
   return(out)
 }
