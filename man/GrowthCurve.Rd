@@ -4,12 +4,14 @@
 \alias{GrowthCurve}
 \title{Tumor growth curves}
 \usage{
-GrowthCurve(alldata, feature)
+GrowthCurve(alldata, feature, labels = NULL)
 }
 \arguments{
 \item{alldata}{list DataImport() output}
 
 \item{feature}{string feature name to plot curves according to}
+
+\item{labels}{The text for the axis and plot title.}
 }
 \value{
 GrowthCurve.ls list with growth curves plot and DataImport() output enriched by feature colour palette

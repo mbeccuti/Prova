@@ -1,8 +1,8 @@
 library(Prova1)
 
 ### Data files
-curve_file <-"/home/pernice/Desktop/prove nico/files/matriXCluster_IC1_Pt1_ADP.xlsx"
-target_file <-"/home/pernice/Desktop/prove nico/files/InfoCurvesXCluster_IC1_Pt1.txt"
+curve_file <-"data/1864dataset.xls"
+target_file <-"data/1864info.txt"
 
 ### Merge curves and target file
 data <- DataImport(curve_file,target_file)
@@ -31,4 +31,5 @@ PlotWithinnessBetweenness(ClustCurve,MeanCurves)
 
 fitclust_allmodels <- FittingAndClustering(databaseTr = data.tr, h = 2, k=k,FCM_all = out$FCM_all, save=FALSE,path=NULL)
 
+list_conteggio<-CountingSamples(fitclust_allmodels,Model = "Malthus")
 
