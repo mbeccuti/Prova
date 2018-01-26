@@ -25,7 +25,7 @@
 #' @examples
 #'
 #'
-#' @import ggplot2
+#' @import ggplot2 cowplot
 #' @export
 FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NULL)
 {
@@ -34,7 +34,7 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NU
   models<-c("FCM","Malthus","Gompertz","Logistic")
   for(i in models)
   {
-    out[[paste(i)]]<-ClusterWithMeanCurve(out.funcit,databaseTr,k,i)
+    out[[paste(i)]]<-ClusterWithMeanCurve(out.funcit,databaseTr,k,i,feature = "Progeny")
 
   }
 
@@ -49,5 +49,6 @@ FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NU
      ggsave(filename = "GompertzCluster.pdf",plot=out$Gompertz$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1,path = path)
      ggsave(filename = "LogisticCluster.pdf",plot=out$Logistic$plotsCluster$ALL,width=29, height = 20, units = "cm",scale = 1,path = path)
   }
+
   return(out)
 }

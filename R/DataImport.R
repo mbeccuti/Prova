@@ -21,7 +21,7 @@ DataImport <- function(file1,file2) {
 
  ###Check the column names
   c_names<-colnames(dataset[2*(1:(length(dataset[1,])/2))])
-  if(length(c_names)!=(length(labcurv$ID)/2))
+  if(length(c_names)!=(length(labcurv$ID)))
   {
     warning("Number of columns in the excel file is different from the number of curves stored in the target file.")
 
@@ -56,17 +56,17 @@ DataImport <- function(file1,file2) {
   ### Organize times, volume and ID curves values, removing NA
   for (cappa in 1:samplesize)
   {
-    tempv <- VolValue[,cappa]
+    tempv <- as.double(VolValue[,cappa])
     tempv <- tempv[!is.na(tempv)]
     lencurv[cappa] <- length(tempv)
-    tempt <-TimeValue[,cappa]
+    tempt <-as.double(TimeValue[,cappa])
     tempt <-tempt[!is.na(tempt)]
 
     if (cappa == 1)
     {
       vol[1:lencurv[cappa]]    <- tempv
       times[1:lencurv[cappa]]  <- tempt
-      ID[1:lencurv[cappa]] <- cappa
+
     }
 
     else
@@ -74,14 +74,13 @@ DataImport <- function(file1,file2) {
       lcum <- cumsum(lencurv)
       vol[(lcum[cappa-1]+1):lcum[cappa]] <- tempv
       times[(lcum[cappa-1]+1):lcum[cappa]] <- tempt
-      ID[(lcum[cappa-1]+1):lcum[cappa]] <- cappa
     }
   }
 
   ndata    <- sum(lencurv)
   vol      <- vol[1:ndata]
   times    <- times[1:ndata]
-  ID       <- ID[1:ndata]
+  ID       <- rep(labcurv$ID,times=lencurv)
   timegrid <- 1:max(times)
 
   ### ID, volume and time data frame
