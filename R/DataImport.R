@@ -4,12 +4,12 @@
 #' Reads the files in a table format and create a list storing all the information.
 #'
 #'
+#' @param file1 the name of the excel file which the data are to be read from. The growth data associated with an experiment must be reported using a pair of columns. The first column must contains the time points, suggested column header "Time". The second column must contains the data volume, the column header is the sample name.
 #'
-#' @param file1 the name of the excel file which the data are to be read from. The growth data associated with an experiment must be reported using a pair of columns. The first column must contains the time points, the header . The second column must contains the data volume, the header is the sample name. The colnames
+#' @param file2 the name of a cvs file which the annontation data are reported. Each row of the file containes: the identifier (ID) of the sample, e.g. an integer number, the sample name used in file1 and a list of features associated with the sample.
 #'
-#' @param file2 the name of a cvs file which the annontation data are reported. Each row of the file containes the sample names file name containing ID curves and corresponding features.
-#' @return List with 4 arguments: a data frame with 3 variables (ID curves, volume and time values), a vector for curves lengths,
-#'         a data frame with curves labeled according to target file features and a vector for overall time grid.
+#' @return List with four arguments: (i) data frame reporting three variables (ID, data and time values), (ii) the vector reporting the number of observations collected per sample, (iii) the data frame with curves labeled according to target file features and (iv) the vector for overall time grid.
+#'
 #' @examples to write...
 #' @import readxl
 #' @export
