@@ -12,7 +12,7 @@
 #' Usually the components are choosen if the sum of the respective percentages is greater than 95 percent.
 #'
 #'
-#' @param data.matrix Matrix with 3 columns: curve ID, volume and time measures.
+#' @param Data Data frame reporting three variables (ID, data and time values).
 #' @param save When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
 #'             the growth curves plot in a pdf.
 #' @param path Path to save plot to (combined with filename).
@@ -21,12 +21,13 @@
 #' @examples to write...
 #' @import ggplot2
 #' @export
-PCAbarplot <- function(data.matrix,save=FALSE,path=NULL)
+PCAbarplot <- function(Data,save=FALSE,path=NULL)
 {
-  TimeGrid <- c(1:max(data.matrix[,3]))
+  TimeGrid <- c(1:max(Data[,3]))
 
+  Data<-as.matrix(Data)
   # curves splines basis coefficients
-  res <- makeCoeffs(data=data.matrix, reg=FALSE, dimBase=5,
+  res <- makeCoeffs(data=Data, reg=FALSE, dimBase=5,
                      grid=TimeGrid, pert=0.01)
 
   # Principal Components Analysis

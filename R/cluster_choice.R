@@ -23,7 +23,7 @@
 #'          for it such that the sum of the first h percentages is greater than 95 percent.
 #' @param PCAperc The PCA percentages calculated with the function PCAbarplot, if it is NULL (default) then it must
 #'        insert in input a value for h.
-#' @return List containing the matrixes in which are stored the AIC and Bic values for different h and k,
+#' @return List containing the matrices in which are stored the AIC and Bic values for different h and k,
 #'         and a list with the FCM's outputs.
 #' @examples
 #'
@@ -48,7 +48,7 @@ Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc=NULL)
   matrix_BIC<-matrix(0,nrow = length(K),ncol = length(H),dimnames=list(row_names,col_names))
 
 
-  data.funcit <-matrix(c(databaseTr$ID,databaseTr$Vol,databaseTr$Time),ncol=3,byrow=F)
+  data.funcit <-matrix(c(database$ID,database$Vol,database$Time),ncol=3,byrow=F)
 
   # return a list of K lists, in which is is stored the output for all h
   # We also create two matrixes with the BIC and AIC values

@@ -28,10 +28,6 @@
 #' @export
 ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model,feature)
 {
-  # source("R/fitfclust.R")
-  # source("R/Residuals.R")
-  # source("R/Clustering.R")
-  # source("R/cluster.symbol.R")
 
   symbols<-cluster.symbol(k)
   Information<-list()

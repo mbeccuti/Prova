@@ -8,17 +8,18 @@
 #'                and a data frame constituted from the curves' ID, observed values and the respective times.
 #'                It is generated automatically from the function DataImport().
 #' @param feature String feature name, stored in the target file, to plot curves according to.
+#' @param labels  The text for the axis and plot title.
 #' @param save When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
 #'             the growth curves plot in a pdf.
 #' @param path Path to save plot to (combined with filename).
 #' @return alldata list DataImport() output with feature color palette.
 #' @import ggplot2 cowplot
 #' @export
-DataVisualization <- function(alldata,feature,save=FALSE,path=NULL)
+DataVisualization <- function(alldata,feature,labels=NULL,save=FALSE,path=NULL)
 {
 
  ### Variables initialization
- growth.curves <- GrowthCurve(alldata,feature)
+ growth.curves <- GrowthCurve(alldata,feature,labels=labels)
  plot1 <- growth.curves$GrowthCurve_plot
  plot2 <- TimeGridDensity(alldata)
 

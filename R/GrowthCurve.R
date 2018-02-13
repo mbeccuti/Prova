@@ -1,6 +1,6 @@
-#' Tumor growth curves
+#' Growth curves
 #'
-#' Plot tumor growth curves
+#' Plots the sample curves.
 #'
 #' @param alldata list DataImport() output
 #' @param feature string feature name to plot curves according to
