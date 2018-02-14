@@ -10,7 +10,7 @@
 #' @param out.funcit Object of class funcyOutList, obtained by the function funcit from the package
 #'                   "funcy" or, selecting a value for k (number of clusters) and h (dimension of the space of
 #'                   of the cluster mean), from the function cluster_choice.
-#' @param databaseTr List containing the number of observations per each curve (called LenCurv),
+#' @param database List containing the number of observations per each curve (called LenCurv),
 #'                and a data frame constituted from the curves' ID, observed values and the respective times,
 #'                that might be truncated at a specific time or not.
 #'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
@@ -26,12 +26,12 @@
 #'
 #' @import ggplot2 cowplot
 #' @export
-ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model,feature)
+ClusterWithMeanCurve<-function(out.funcit,database,k,model,feature)
 {
 
   symbols<-cluster.symbol(k)
   Information<-list()
-  time <- sort(unique(databaseTr$Dataset$Time))
+  time <- sort(unique(database$Dataset$Time))
 
   if(model=="FCM")
   {
@@ -47,17 +47,17 @@ ClusterWithMeanCurve<-function(out.funcit,databaseTr,k,model,feature)
     }
   }
   else{
-    clustering(databaseTr,k,model) ->classification
+    clustering(database,k,model) ->classification
     classification$cluster ->classes-> Information$classes
     classification$center -> Information$center
     classification$meancurves->meancurves->Information$meancurves
   }
-  classificate <- rep(classes,databaseTr$LenCurv)
-  curves <- data.frame(Times=databaseTr$Dataset$Time,Vol=databaseTr$Dataset$Vol,ID=databaseTr$Dataset$ID,Cluster=classificate, Info=rep(t(databaseTr$LabCurv[feature]),databaseTr$LenCurv))
-  Information$ClustCurve <- data.frame(merge(curves[,1:4],databaseTr$LabCurv,by="ID"))
+  classificate <- rep(classes,database$LenCurv)
+  curves <- data.frame(Times=database$Dataset$Time,Vol=database$Dataset$Vol,ID=database$Dataset$ID,Cluster=classificate, Info=rep(t(database$LabCurv[feature]),database$LenCurv))
+  Information$ClustCurve <- data.frame(merge(curves[,1:4],database$LabCurv,by="ID"))
 
   # cut the meancurves at the growth curves' maximum time
-  time1<-sort(unique(databaseTr$Dataset$Time))
+  time1<-sort(unique(database$Dataset$Time))
   meancurves_truncated<-c()
   time3<-c()
   cluster<-c()

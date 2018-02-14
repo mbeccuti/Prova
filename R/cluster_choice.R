@@ -12,7 +12,7 @@
 #' automatically, so that the sum of the first h percentages is greater than 95 percent.
 #'
 #'
-#' @param databaseTr  List containing the number of observations per each curve (called LenCurv),
+#' @param database  List containing the number of observations per each curve (called LenCurv),
 #'                and a data frame constituted from the curves' ID, observed values and the respective times,
 #'                that might be truncated at a specific time or not.
 #'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
@@ -30,7 +30,7 @@
 #'
 #' @import funcy
 #' @export
-Cluster_choice<-function(databaseTr,K,h=NULL,PCAperc=NULL)
+Cluster_choice<-function(database,K,h=NULL,PCAperc=NULL)
 {
 
   if(is.null(h))

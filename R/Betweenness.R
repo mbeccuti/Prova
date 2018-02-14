@@ -1,3 +1,4 @@
+
 #' Overall clusters betweenness
 #'
 #' Betweenness across all clusters is computed
@@ -5,8 +6,8 @@
 #' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
 #' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
 #' @return A list with 4 arguments (if "centroids" equals TRUE): Betweenness is a matrix with 2 columns, the minimum cluster distance and the cluster name that achieves the minimum;
-#'                                                               CentroidDist is a K x K matrix (where K is the cluster number) containing centroids cluster distance among each cluster couple;
-#'                                                               Classes a vector containing the cluster name membership for each dataset curve.
+#'CentroidDist is a K x K matrix (where K is the cluster number) containing centroids cluster distance among each cluster couple;
+#'Classes a vector containing the cluster name membership for each dataset curve.
 #' @examples
 #' @export
 Betweenness <- function(ClustCurve,MeanCurves)

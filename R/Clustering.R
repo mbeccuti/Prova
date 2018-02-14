@@ -1,10 +1,10 @@
 #' Clustering
 #'
-#'@description
-#' The function clustering() fits and clusterize the data stored in databaseTr with a model among
+#' @description
+#' The function clustering() fits and clusterize the data stored in database with a model among
 #' the Malthus, Gompertz and Logistic ones.
 #'
-#' @param databaseTr  List containing the number of observations per each curve (called LenCurv),
+#' @param database  List containing the number of observations per each curve (called LenCurv),
 #'                and a data frame constituted from the curves' ID, observed values and the respective times,
 #'                that might be truncated at a specific time or not.
 #'                It is generated automatically from the function DataImport() or DataTruncation() if we want consider
@@ -18,10 +18,10 @@
 #'
 #' @import grofit
 #' @export
-clustering<- function(databaseTr,k,model)
+clustering<- function(database,k,model)
 {
 
-  databaseTr->dati
+  database->dati
   time <- dati$Dataset$Time
   t <- sort(unique(time))
   x <- dati$Dataset$Vol

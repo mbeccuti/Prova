@@ -5,7 +5,6 @@
 #'
 #' @param cluster
 #' @param Model
-#' @param
 #' @return
 #' @examples
 #'
