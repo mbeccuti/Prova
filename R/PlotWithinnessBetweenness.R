@@ -1,6 +1,6 @@
 #' Withinness & Betweenness Visualization
 #'
-#' Plot withinness and betweenness clustering measures  
+#' Plot withinness and betweenness clustering measures
 #'
 #' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
 #' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
@@ -68,17 +68,21 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
   WithDist$Cluster <- factor(WithDist$Cluster)
   WithDist$feature <- factor(WithDist$feature)
 
-  plots <- ggplot() + geom_circle(aes(x0=x0, y0=y0, r=r,linetype=distance), data=circles,size=1,show.legend=FALSE)
-  plots <- plots + scale_shape_manual(values=c(0:(K-1))) + geom_point(data=WithDist,aes(x=x1,y=y1,shape=Cluster,color=feature),size=2)
+  plots <- ggplot() + geom_circle(aes(x0=x0, y0=y0, r=r,linetype=distance), data=circles,size=1)
+  plots <- plots + scale_shape_manual(values=c(0:(K-1)))+
+            geom_point(data=WithDist,aes(x=x1,y=y1,shape=Cluster,color=feature),size=4)+
+            scale_linetype_manual("",values = c( "2"= "dashed",
+                                                 "1"="solid"),
+                                  labels=c("Mean ","Mean+- sd"))
   feature.name <- colnames(WithDist)[4]
   plots <- plots  + geom_text(aes(x=x0, y=y0,label=Cluster), data=circles) + scale_colour_manual(values = feature.palette,name=feature.name) + labs(title="Cluster betweenness and withinness",x="distance",y="distance")
-  
+
   if(save==TRUE)
   {
    if(is.null(path)) path <- getwd()
    ggsave(filename="Betweenness&Withinness.pdf",plot =plots,width=29, height = 20, units = "cm",scale = 1,path=path)
   }
-  
+
   return(plots)
 }
 
