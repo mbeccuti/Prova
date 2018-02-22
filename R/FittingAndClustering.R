@@ -20,6 +20,7 @@
 #' @param save When TRUE (the default is FALSE), it is possible to save the plots of the growth curves divided
 #'             depending on the belonging cluster in a pdf per each model.
 #' @param path Path to save plot to (combined with filename).
+#' @param labels  The text for the axes.
 #' @return  List containing per each model the mean curves plot and the clustered growth curves plots
 #'          and a list of informations about the model clustered.
 #' @examples
@@ -27,14 +28,14 @@
 #'
 #' @import ggplot2 cowplot
 #' @export
-FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NULL)
+FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NULL,labels=NULL)
 {
   out<-list()
   out.funcit <-FCM_all[[paste("k=",k)]][[paste("h=",h)]]
   models<-c("FCM","Malthus","Gompertz","Logistic")
   for(i in models)
   {
-    out[[paste(i)]]<-ClusterWithMeanCurve(out.funcit,databaseTr,k,i,feature = "Progeny")
+    out[[paste(i)]]<-ClusterWithMeanCurve(out.funcit,databaseTr,k,i,feature = feature,labels=labels)
 
   }
 

@@ -23,7 +23,7 @@ DataImport <- function(file1,file2) {
   c_names<-colnames(dataset[2*(1:(length(dataset[1,])/2))])
   if(length(c_names)!=(length(labcurv$ID)))
   {
-    warning("Number of columns in the excel file is different from the number of curves stored in the target file.")
+    warning("Number of columns in the excel file is different from the number of samples stored in the target file.")
 
   }else{
 

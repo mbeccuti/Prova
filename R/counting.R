@@ -23,7 +23,19 @@ CountingSamples<-function(cluster,Model=NULL)
 
  for( i in Model)
  {
-   ClustCurve<-cluster[[i]]$Information$ClustCurve
+   # Possibility to consider the ClusterWithMeanCurve output
+
+   if(is.null(cluster[[i]])) {
+     if(is.null(cluster$Information))
+     {
+       warning("File in input is different from the ClusterWithMeanCurve or FittingAndClustering output")
+
+       break
+     }
+     ClustCurve<-cluster$Information$ClustCurve
+   }else{ ClustCurve<-cluster[[i]]$Information$ClustCurve}
+
+
    feature<-tail(colnames(ClustCurve),1)
    a<-count(ClustCurve, c("ID", "Cluster",feature))[,-4]
    Counting[[paste(i)]]<-count(a,c( "Cluster",feature))

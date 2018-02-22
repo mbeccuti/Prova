@@ -1,4 +1,4 @@
-#' PCA Bar Plot
+#' PCA Analysis
 #'
 #'@description
 #' PCAbarplot() is used to choice the dimension of the cluster mean space, h.
@@ -21,7 +21,7 @@
 #' @examples to write...
 #' @import ggplot2
 #' @export
-PCAbarplot <- function(Data,save=FALSE,path=NULL)
+PCA.Analysis <- function(Data,save=FALSE,path=NULL)
 {
   TimeGrid <- c(1:max(Data[,3]))
 
@@ -49,7 +49,7 @@ PCAbarplot <- function(Data,save=FALSE,path=NULL)
 
   if(save==TRUE)
   {
-    ggsave(filename="PCAbarplot.pdf",plot =PCA_barplot,width=29, height = 20, units = "cm",scale = 1,path = path)
+    ggsave(filename="PCA_Analysis.pdf",plot =PCA_barplot,width=29, height = 20, units = "cm",scale = 1,path = path)
   }
   return(list(plot=PCA_barplot,perc=percentage))
   }

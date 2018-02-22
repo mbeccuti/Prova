@@ -8,11 +8,11 @@ target_file <-"data/1864info.txt"
 data <- DataImport(curve_file,target_file)
 
 ### Visualization
-DataVisualization(data,feature="Progeny",save=FALSE,path=NULL)
-data.tr <- DataTruncation(alldata=data,feature="Progeny",truncTime=60)
+DataVisualization(data,feature="Progeny",labels = c("time","volume","Tumor Growth"),save=TRUE,path="~/Desktop/ImagesPerFrancesca/")
+data.tr <- DataTruncation(alldata=data,feature="Progeny",truncTime=60,save=TRUE,path="~/Desktop/ImagesPerFrancesca/",labels = c("time","volume","Tumor Growth"))
 
 ### PCA
-pca <- PCAbarplot(data.tr$Dataset,save=FALSE,path=NULL)
+pca <- PCA.Analysis(data.tr$Dataset,save=TRUE,path="~/Desktop/ImagesPerFrancesca/")
 
 k <- 4
 
@@ -27,10 +27,10 @@ MalthusPlots<- ClusterWithMeanCurve(out.funcit,database = data.tr,k = k,"Malthus
 ### Withinness and betweenness plot for FCM
 ClustCurve <- FCMplots$Information$ClustCurve
 MeanCurves <- FCMplots$Information$meancurves
-PlotWithinnessBetweenness(ClustCurve,MeanCurves)
+PlotWithinnessBetweenness(ClustCurve,MeanCurves,save=TRUE,path="~/Desktop/ImagesPerFrancesca/")
 
 fitclust_allmodels <- FittingAndClustering(databaseTr = data.tr, h = 2, k=k,FCM_all =
-out$FCM_all, save=FALSE,path=NULL)
+out$FCM_all, feature = "Progeny",save=TRUE,path="~/Desktop/ImagesPerFrancesca/",labels = c("time","volume"))
 
 list_conteggio<-CountingSamples(fitclust_allmodels,Model = "Malthus")
 
