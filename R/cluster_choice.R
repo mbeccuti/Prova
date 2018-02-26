@@ -33,6 +33,8 @@
 Cluster_choice<-function(database,K,h=NULL,PCAperc=NULL)
 {
 
+  database<-database$Dataset
+
   if(is.null(h))
   {
     if(is.null(PCAperc)) print("Choose a value for h or insert the PCA percentages")
