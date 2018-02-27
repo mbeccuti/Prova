@@ -17,13 +17,13 @@ pca$plot
 
 k <- c(2:6)
 
-CONNECTORList.FCM <- Cluster_choice(CONNECTORList$Dataset,K=c(2:6),h=2)
+CONNECTORList.FCM <- Cluster_choice(CONNECTORList,K=c(2:6),h=2)
 
-out.funcit <- out$FCM_all$`k= 4`$`h= 2`
+out.funcit <- CONNECTORList.FCM$FCM_all$`k= 4`$`h= 2`
 
-FCMplots <- ClusterWithMeanCurve(out.funcit,database = data.tr,k = k,"FCM",feature = "Progeny")
+FCMplots <- ClusterWithMeanCurve(out.funcit,CONNECTORList,k = k,"FCM",feature = "Progeny")
 
-MalthusPlots<- ClusterWithMeanCurve(out.funcit,database = data.tr,k = k,"Malthus")
+MalthusPlots<- ClusterWithMeanCurve(database = CONNECTORList,k = 4,model="Malthus",feature = "Progeny")
 
 ### Withinness and betweenness plot for FCM
 ClustCurve <- FCMplots$Information$ClustCurve

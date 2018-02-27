@@ -28,8 +28,13 @@
 #'
 #' @import ggplot2 cowplot
 #' @export
-ClusterWithMeanCurve<-function(out.funcit,database,k,model,feature,labels=NULL)
+ClusterWithMeanCurve<-function(out.funcit=NULL,database,k,model,feature,labels=NULL)
 {
+  if(is.null(out.funcit) & model=="FCM")
+  {
+    warning("The model FCM needs in input a funcit output." )
+    break
+  }
 
   if(is.null(labels))
   {
@@ -61,6 +66,7 @@ ClusterWithMeanCurve<-function(out.funcit,database,k,model,feature,labels=NULL)
     }
   }
   else{
+
     clustering(database,k,model) ->classification
     classification$cluster ->classes-> Information$classes
     classification$center -> Information$center
