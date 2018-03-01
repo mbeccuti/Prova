@@ -25,7 +25,7 @@ FCMplots <- ClusterWithMeanCurve(CONNECTORList.FCM.k4.h2,CONNECTORList,k = 4,"FC
 
 MalthusPlots<- ClusterWithMeanCurve(database = CONNECTORList,k = 4,model="Malthus",feature = "Progeny")
 
-CONNECTORList.models <- FittingAndClustering(databaseTr = CONNECTORList, FCM_all = CONNECTORList.FCM, h = 2, k=3, feature = "Progeny", labels = c("time","volume"))
+CONNECTORList.models <- FittingAndClustering(databaseTr = CONNECTORList, FCM_all = CONNECTORList.FCM, h = 2, k=4, feature = "Progeny", labels = c("time","volume"))
 
 ### Withinness and betweenness plot for FCM
 Malthus.ClustCurve <-  CONNECTORList.models$Malthus$Information$ClustCurve

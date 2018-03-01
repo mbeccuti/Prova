@@ -24,8 +24,13 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,Title=NULL,save=TRUE
   within.all <- Withinness(ClustCurve,MeanCurves,centroids=TRUE)
   ## calculate the nearest cluster
   between.all <- Betweenness(ClustCurve,MeanCurves)$Betweenness
+
+  if(length(which(table(between.all[,2])==1))== 0 )
+      {first<-names(which(table(c(between.all[,2],rownames(between.all)))==1)[1])}
+  else{ first<-names(which(table(between.all[,2])==1)[1])}
   ## sort the cluster and save the distance among them
-  shift<-sort(Betweenness(ClustCurve,MeanCurves)$CentroidDist[1,])
+  shift<-sort(Betweenness(ClustCurve,MeanCurves)$CentroidDist[paste(first),])
+
   ClustSymbol.sorted <- names(shift)
   i<-match(ClustSymbol.sorted, ClustSymbol)
 
@@ -53,7 +58,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,Title=NULL,save=TRUE
   for(k in 1:K)
   {
   ### Data frames
-    dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i[k],ClustSymbol,shift=shift[i[k]])
+    dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i[k],ClustSymbol,shift=shift[k])
     circles[index[k,],] <- dataplot$circles
     WithDist[counter:(cumsum(cluster.magnitudo)[k]),] <- dataplot$WithDist
     counter <- cumsum(cluster.magnitudo)[k] + 1
@@ -74,7 +79,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,Title=NULL,save=TRUE
   if(is.null(Title)) Title<-"Cluster betweenness and withinness"
 
   plots <- plots  + geom_text(aes(x=x0, y=y0,label=Cluster), data=circles) +
-                    scale_colour_manual(values = cluster.palette,name="Cluster Colors") +
+                    #scale_colour_manual(values = cluster.palette,name="Cluster Colors") +
                     labs(title=Title,x="distance",y="distance")+
                     theme(plot.title = element_text(hjust = 0.5),                                                                      axis.line = element_line(colour = "black"))
 

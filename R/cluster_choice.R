@@ -75,7 +75,8 @@ Cluster_choice<-function(database,K,h=NULL,PCAperc=NULL)
   Tot.within<-data.frame(dist=c(Tot.within),K=rep(K,length(H)),H=factor(rep(H,each=length(K))))
   ElbowMethod<-ggplot(data=Tot.within,aes(x=K))+ geom_point(aes(y=dist,col=H))+
                                     geom_line(aes(y=dist,col=H))+
-                                    labs(title="Elbow method",x="Cluster",y="total within-cluster")
+                                    labs(title="Elbow method",x="Cluster",y="total within-cluster")+
+                                    theme(text = element_text(size=20))
 
 
 
