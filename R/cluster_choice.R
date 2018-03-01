@@ -21,14 +21,12 @@
 #' @param h Dimension of the cluster mean space.
 #'          As default is NULL, so that using the percentages from the PCA it is possible to estimate a value
 #'          for it such that the sum of the first h percentages is greater than 95 percent.
-#' @param PCAperc The PCA percentages calculated with the function PCAbarplot, if it is NULL (default) then it must
-#'        insert in input a value for h.
-#' @return List containing the matrices in which are stored the AIC and Bic values for different h and k,
-#'         and a list with the FCM's outputs.
+#' @param PCAperc The PCA percentages calculated with the function PCAbarplot, if it is NULL (default) then it must insert in input a value for h.
+#' @return List containing the matrices in which are stored the AIC and Bic values for different h and k, a list with the FCM's outputs and the plot generated from the Elbow Method.
 #' @examples
 #'
 #'
-#' @import funcy
+#' @import funcy ggplot2
 #' @export
 Cluster_choice<-function(database,K,h=NULL,PCAperc=NULL)
 {
@@ -52,6 +50,8 @@ Cluster_choice<-function(database,K,h=NULL,PCAperc=NULL)
 
   data.funcit <-matrix(c(database$ID,database$Vol,database$Time),ncol=3,byrow=F)
 
+  Tot.within<-matrix(0,nrow = length(K),ncol = length(H),dimnames=list(row_names,col_names))
+
   # return a list of K lists, in which is is stored the output for all h
   # We also create two matrixes with the BIC and AIC values
   for(k in K)
@@ -62,11 +62,23 @@ Cluster_choice<-function(database,K,h=NULL,PCAperc=NULL)
       mycontfclust = new("funcyCtrl",baseType="splines",dimBase=5,init="kmeans",nrep=10,redDim=h)
       out.funcit<- funcit(data.funcit,seed=2404,k,methods="fitfclust",funcyCtrl=mycontfclust,save.data=TRUE)
       output_h[[paste("h=",h)]] <- out.funcit
+
+      minDist<-out.funcit@models$fitfclust@cldist[,1]
+      Tot.within[which(K==k),which(H==h)]<-sum(minDist)
+
       matrix_BIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@BIC
       matrix_AIC[which(K==k),which(H==h)]<-output_h[[paste("h=",h)]]@models$fitfclust@AIC
     }
     output_k[[paste("k=",k)]]<-output_h
   }
 
-  return(list(FCM_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC))
+  Tot.within<-data.frame(dist=c(Tot.within),K=rep(K,length(H)),H=factor(rep(H,each=length(K))))
+  ElbowMethod<-ggplot(data=Tot.within,aes(x=K))+ geom_point(aes(y=dist,col=H))+
+                                    geom_line(aes(y=dist,col=H))+
+                                    labs(title="Elbow method",x="Cluster",y="total within-cluster")
+
+
+
+
+  return(list(FCM_all=output_k,matrix_BIC=matrix_BIC,matrix_AIC=matrix_AIC,ElbowMethod=ElbowMethod))
 }

@@ -5,22 +5,22 @@
 #' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
 #' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
 #' @param i A numerical value for the cluster involved in withinness computation
-#' @param shift A numerical value at which center withinness circles. 
-#' @return DataFrame.i A list with 2 dataframe arguments: "circles" contains coordinates and radius for i-th cluster withinness circles measures;  
+#' @param ClustSymbol Vector of the cluster symbols.
+#' @param shift A numerical value at which center withinness circles.
+#' @return DataFrame.i A list with 2 dataframe arguments: "circles" contains coordinates and radius for i-th cluster withinness circles measures;
 #'                                                        "WithDist" contains i-th cluster curves withinness distance from i-th cluster centroid/meancurve
 #' @examples
 #' @export
-DataFrameWithinness.i <- function(ClustCurve,MeanCurves,i,shift=0)
+DataFrameWithinness.i <- function(ClustCurve,MeanCurves,i,ClustSymbol,shift=0)
 {
   K <- length(unique(ClustCurve[,4]))
-  ClustSymbol <- cluster.symbol(K)
   feature <- colnames(ClustCurve)[5]
   nfeature <- length(unique(ClustCurve[,feature]))[1]
   featurecurve.i <- t(unique(ClustCurve[ClustCurve[,4]==i,c(1,5)])[2])
-  
+
   ### Centroid withinness distance
   Withinness.i <- WithCluster_MeanDist(ClustCurve,MeanCurves,i)
-  
+
   ### Mean and standard deviation distance
   mean.dist <- mean(Withinness.i)
   st.dev <- sd(Withinness.i)

@@ -31,6 +31,7 @@
 FittingAndClustering<-function(databaseTr,h,k,FCM_all,feature,save=FALSE,path=NULL,labels=NULL)
 {
   out<-list()
+  FCM_all<-FCM_all$FCM_all
   out.funcit <-FCM_all[[paste("k=",k)]][[paste("h=",h)]]
   models<-c("FCM","Malthus","Gompertz","Logistic")
   for(i in models)

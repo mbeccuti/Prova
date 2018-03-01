@@ -4,38 +4,32 @@
 #'
 #' @param ClustCurve A data frame with 5 arguments : time, volume, ID, cluster membership and feature values for each curves.
 #' @param MeanCurves A matrix with the meancurves on the columns according to different clusters.
+#' @param Title Title to associate to the withinness and Betweenness plot.
 #' @param save A logical value. If "save" equals TRUE the plot is saved in a pdf file (the default is FALSE).
 #' @param path A character string for saving plot path folder .If "save" is TRUE and "path" is missing, the plot is saved in the current directory.
 #' @examples
 #' @import ggplot2 ggforce
 #' @export
-PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
+PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,Title=NULL,save=TRUE,path=NULL)
 {
 
   K <- length(unique(ClustCurve[,4]))
-  ClustSymbol <- cluster.symbol(K)
+  ClustSymbol<-cluster.symbol(K)
   nfeature <- length(unique(ClustCurve[,5]))[1]
-  feature.palette <- rainbow(nfeature+3)
+  cluster.palette <- rainbow(K)
+  #feature.palette <- rainbow(nfeature+3)
   feature.lev <- sort(unique(ClustCurve[,5]))
-  within.all <- Withinness(ClustCurve,MeanCurves,centroids=TRUE)
-  between.all <- Betweenness(ClustCurve,MeanCurves)$Betweenness
-  linked <- cbind(ClustSymbol,NearestClust=between.all[,2])
-  linked <- t(apply(linked,1,sort))
-  betweenness <- between.all[duplicated(linked)==FALSE,]
-  shift <- c(0,betweenness[,1])
-  i <- rep(1,K)
 
-  for(j in 1:(K-1))
-  {
-   if(!(ClustSymbol[i[j]] %in% rownames(betweenness)))
-    {
-    ### i[j] th cluster neighbors
-    neighbors <- rownames(betweenness)[betweenness[,2]==ClustSymbol[i[j]]]
-    i[j+1] <- which(ClustSymbol==neighbors[!(neighbors %in% ClustSymbol[i])])
-    }
-   else i[j+1] <- which(ClustSymbol==betweenness[i[j],2])
-  }
-  cluster.magnitudo <- apply(table(unique(ClustCurve[,c(4,1)])),1,sum)
+  ## calculate the max, min, mean and sd distance in the k-clusters;
+  within.all <- Withinness(ClustCurve,MeanCurves,centroids=TRUE)
+  ## calculate the nearest cluster
+  between.all <- Betweenness(ClustCurve,MeanCurves)$Betweenness
+  ## sort the cluster and save the distance among them
+  shift<-sort(Betweenness(ClustCurve,MeanCurves)$CentroidDist[1,])
+  ClustSymbol.sorted <- names(shift)
+  i<-match(ClustSymbol.sorted, ClustSymbol)
+
+  cluster.magnitudo <- apply(table(unique(ClustCurve[,c(4,1)])),1,sum)[i]
   circles <- data.frame(
   x0 = numeric(3*K)     ,
   y0 = numeric(3*K)     ,
@@ -44,6 +38,7 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
   Cluster = numeric(3*K)
   )
   colnames(circles) <- c("x0","y0","r","distance","Cluster")
+
   n <- length(unique(ClustCurve[,1]))
   WithDist <- data.frame(
   x1 = numeric(n),
@@ -54,28 +49,35 @@ PlotWithinnessBetweenness <- function(ClustCurve,MeanCurves,save=TRUE,path=NULL)
   colnames(WithDist) <- c("x1","y1","Cluster","feature")
   counter <- 1
   index <- matrix(seq(1,3*K),nrow=K,byrow=TRUE)
+
   for(k in 1:K)
   {
   ### Data frames
-  dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i[k],shift=cumsum(shift)[i[k]])
-  circles[index[k,],] <- dataplot$circles
-  WithDist[counter:(cumsum(cluster.magnitudo)[i[k]]),] <- dataplot$WithDist
-  counter <- cumsum(cluster.magnitudo)[i[k]] + 1
+    dataplot <- DataFrameWithinness.i(ClustCurve,MeanCurves,i[k],ClustSymbol,shift=shift[i[k]])
+    circles[index[k,],] <- dataplot$circles
+    WithDist[counter:(cumsum(cluster.magnitudo)[k]),] <- dataplot$WithDist
+    counter <- cumsum(cluster.magnitudo)[k] + 1
   }
 
   circles$distance <- factor(circles$distance)
   circles$Cluster <- factor(circles$Cluster)
+
   WithDist$Cluster <- factor(WithDist$Cluster)
   WithDist$feature <- factor(WithDist$feature)
 
-  plots <- ggplot() + geom_circle(aes(x0=x0, y0=y0, r=r,linetype=distance), data=circles,size=1)
+  plots <- ggplot() + geom_circle(aes(x0=x0, y0=y0, r=r,linetype=distance,color=Cluster), data=circles,size=1)
   plots <- plots + scale_shape_manual(values=c(0:(K-1)))+
-            geom_point(data=WithDist,aes(x=x1,y=y1,shape=Cluster,color=feature),size=4)+
-            scale_linetype_manual("",values = c( "2"= "dashed",
-                                                 "1"="solid"),
-                                  labels=c("Mean ","Mean+- sd"))
-  feature.name <- colnames(WithDist)[4]
-  plots <- plots  + geom_text(aes(x=x0, y=y0,label=Cluster), data=circles) + scale_colour_manual(values = feature.palette,name=feature.name) + labs(title="Cluster betweenness and withinness",x="distance",y="distance")
+                    geom_point(data=WithDist,aes(x=x1,y=y1,shape=Cluster),size=4)+
+                    scale_linetype_manual("",values = c( "2"= "dashed","1"="solid"),
+                                           labels=c("Mean ","Mean+- sd"))
+
+  if(is.null(Title)) Title<-"Cluster betweenness and withinness"
+
+  plots <- plots  + geom_text(aes(x=x0, y=y0,label=Cluster), data=circles) +
+                    scale_colour_manual(values = cluster.palette,name="Cluster Colors") +
+                    labs(title=Title,x="distance",y="distance")+
+                    theme(plot.title = element_text(hjust = 0.5),                                                                      axis.line = element_line(colour = "black"))
+
 
   if(save==TRUE)
   {

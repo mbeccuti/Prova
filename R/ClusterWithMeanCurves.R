@@ -96,11 +96,12 @@ ClusterWithMeanCurve<-function(out.funcit=NULL,database,k,model,feature,labels=N
   PlotMeanCurveFCM<-ggplot()+
                     geom_line(data=plot_data, aes(x=time,y=means,group=clusters) )+
                     labs(title=paste(model," cluster mean curves"), x=axis.x, y = axis.y)+
-                    theme(plot.title = element_text(hjust = 0.5))
+                    theme(plot.title = element_text(hjust = 0.5),axis.line = element_line(colour = "black"),panel.background = element_blank())
 
     col<-as.character(unique(curves$Info))
     col1<-rainbow(length(col))
     plots<-list()
+    ymax<-max(curves$Vol)
     for(i in 1:k)
     {
       plots[[paste(symbols[i],"Cluster")]]<-ggplot()+
@@ -108,7 +109,8 @@ ClusterWithMeanCurve<-function(out.funcit=NULL,database,k,model,feature,labels=N
         labs(title=paste(model,"",symbols[i],"Cluster"), x=axis.x, y = axis.y)+
         geom_line(data = curves[curves$Cluster==i,],aes(x=Times,y=Vol,group=ID,color=factor(Info)))+
         scale_colour_manual(values = col1,limits=col,breaks=col,name=feature)+
-        theme(plot.title = element_text(hjust = 0.5))
+        theme(plot.title = element_text(hjust = 0.5),axis.line = element_line(colour = "black"),panel.background = element_blank())+
+        ylim(0,ymax)
     }
      plots[["ALL"]]<-plot_grid(plotlist = plots)
      plots$ALL
