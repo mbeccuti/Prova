@@ -1,27 +1,32 @@
 #' Data Visualitation
 #'
-#' DataVisualization() returns a plot that compares the density time grid and  the growth curves plot
-#' in order to understand if it is useful truncate the data and so choose the truncation time.
+#' Visualization of the time grid and the line plot of cancer growth data.
 #'
 #'
-#' @param alldata List containing the number of observations per each curve (called LenCurv),
-#'                and a data frame constituted from the curves' ID, observed values and the respective times.
-#'                It is generated automatically from the function DataImport().
-#' @param feature String feature name, stored in the target file, to plot curves according to.
-#' @param labels  The text for the axis and plot title.
-#' @param save When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
-#'             the growth curves plot in a pdf.
-#' @param path Path to save plot to (combined with filename).
-#' @return alldata list DataImport() output with feature color palette.
+#' @param data CONNECTORList.
+#' @param feature The column name reported in the AnnotationFile containing the feature interesting for the user to be investigated.
+#' @param labels Vector containing the text for the title of axis and plot title.
+#' @param save If TRUE the plot is saved in a pdf file.
+#' @param path Path to save plot to (combined with file name). If it is missing, the plot is saved in the working directory.
+#' @return A plot with the density time grid and the line plot of cancer growth data as a ggplot object.
+#' @example
+#'
+#'GrowDataFile<-"data/1864dataset.xls"
+#'AnnotationFile <-"data/1864info.txt"
+#'
+#'CONNECTORList <- DataImport(GrowDataFile,AnnotationFile)
+#'
+#'DataVisualization(CONNECTORList,"Progeny",labels = c("time","volume","Tumor Growth"))
+#'
 #' @import ggplot2 cowplot
 #' @export
-DataVisualization <- function(alldata,feature,labels=NULL,save=FALSE,path=NULL)
+DataVisualization <- function(data,feature,labels=NULL,save=FALSE,path=NULL)
 {
 
  ### Variables initialization
- growth.curves <- GrowthCurve(alldata,feature,labels=labels)
+ growth.curves <- GrowthCurve(data,feature,labels=labels)
  plot1 <- growth.curves$GrowthCurve_plot
- plot2 <- TimeGridDensity(alldata)
+ plot2 <- TimeGridDensity(data)
 
  plots <- plot_grid(plotlist=list(plot1 , plot2))
 

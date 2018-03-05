@@ -1,33 +1,34 @@
 #' PCA Analysis
 #'
 #'@description
-#' PCAbarplot() is used to choice the dimension of the cluster mean space, h.
-#' The PCA method performs an accurate analysis to determine whether the means lie in a lower
-#' dimensional space, note that if h is equal to the number of cluster menus one, does not produce restriction on the mean
-#' space.
-#' To estimate h the Principal Component Analysis (PCA) is applied to the spline coefficients provided
-#' for each curves by the functional clustering model.
-#' It generates a bar plot indicating with how much percentage the principal components explain
-#' the variability in the data.
-#' Usually the components are choosen if the sum of the respective percentages is greater than 95 percent.
 #'
+#' Generates a bar plot reporting the percentage values associated to each component identified by the Principal Component Analysis (PCA).
 #'
-#' @param Data Data frame reporting three variables (ID, data and time values).
-#' @param save When TRUE (the default is FALSE), it is possible to save a plot that compares the density time grid and
-#'             the growth curves plot in a pdf.
-#' @param path Path to save plot to (combined with filename).
-#' @return List containing the plot of the variances against the number of the principal component and
-#'         the vector of percentages.
-#' @examples to write...
+#' @param data CONNECTORList.
+#' @param p
+#' @param save If TRUE the bar plot of the PCA components is saved in a pdf file.
+#' @param path  Path to save plot to (combined with file name). If it is missing, the plot is saved in the working  directory.
+#' @return The bar plot of the PCA components and the vector of percentage values of the PCA components.
+#' @examples
+#'
+#' GrowDataFile<-"data/1864dataset.xls"
+#' AnnotationFile <-"data/1864info.txt"
+#'
+#' CONNECTORList <- DataImport(GrowDataFile,AnnotationFile)
+#'
+#' CONNECTORList<- DataTruncation(CONNECTORList,"Progeny",truncTime=60,labels = c("time","volume","Tumor Growth"))
+#'
+#' PCA.Analysis(CONNECTORList$Dataset)
+#'
 #' @import ggplot2
 #' @export
-PCA.Analysis <- function(Data,save=FALSE,path=NULL)
+PCA.Analysis <- function(data,p=5,save=FALSE,path=NULL)
 {
-  TimeGrid <- c(1:max(Data[,3]))
+  TimeGrid <- c(1:max(data[,3]))
 
-  Data<-as.matrix(Data)
+  data<-as.matrix(data)
   # curves splines basis coefficients
-  res <- makeCoeffs(data=Data, reg=FALSE, dimBase=5,
+  res <- makeCoeffs(data=data, reg=FALSE, dimBase=p,
                      grid=TimeGrid, pert=0.01)
 
   # Principal Components Analysis

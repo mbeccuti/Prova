@@ -1,16 +1,24 @@
 #' Growth curves
 #'
-#' Plots the sample curves.
+#' Visualization of the line plot of the cancer growth data.
+#' The curves are colored with respect of the feature chosen by the user and reported in the AnnotationFile.
 #'
-#' @param alldata list DataImport() output
-#' @param feature string feature name to plot curves according to
-#' @param labels  The text for the axis and plot title.
-#' @return GrowthCurve.ls list with growth curves plot and DataImport() output enriched by feature colour palette
+#' @param data CONNECTORList.
+#' @param feature The column name reported in the AnnotationFile containing the feature interesting for the user to be investigated.
+#' @param labels   Vector containing the text for the axis and plot title.
+#' @return A list containing the line plot and the CONNECTORList.
 #' @examples
+#' GrowDataFile<-"data/1864dataset.xls"
+#' AnnotationFile <-"data/1864info.txt"
+#'
+#' CONNECTORList <- DataImport(GrowDataFile,AnnotationFile)
+#'
+#' GrowthCurve(CONNECTORLis,"Progeny",labels=c("time","volume","Tumor Growth"))
+#'
 #' @import ggplot2
 #' @export
 
-GrowthCurve <- function(alldata,feature,labels=NULL)
+GrowthCurve <- function(data,feature,labels=NULL)
 {
   if(is.null(labels))
   {
@@ -26,8 +34,8 @@ GrowthCurve <- function(alldata,feature,labels=NULL)
 
 
   ### dataframe for ggplot
-  dataplot <- alldata$Dataset
-  dataplot <- data.frame(merge(alldata$Dataset,alldata$LabCurv[,c("ID",feature)],by="ID"))
+  dataplot <- data$Dataset
+  dataplot <- data.frame(merge(data$Dataset,data$LabCurv[,c("ID",feature)],by="ID"))
   dataplot[,feature]<-factor(as.matrix(dataplot[feature]))
   feature.palette <- rainbow(dim(unique(dataplot[feature]))[1])
 
@@ -39,10 +47,10 @@ GrowthCurve <- function(alldata,feature,labels=NULL)
   theme(plot.title = element_text(hjust = 0.5),title =element_text(size=10, face='bold'))
   GrowthCurve + scale_colour_manual(values = feature.palette)
 
-  ### Enrich alldata with colour palette
-  alldata$FeatureColour <- feature.palette
+  ### Enrich data with colour palette
+  data$FeatureColour <- feature.palette
 
-  GrowthCurve.ls <- list(GrowthCurve_plot=GrowthCurve,alldata=alldata)
+  GrowthCurve.ls <- list(GrowthCurve_plot=GrowthCurve,data=data)
 
   return( GrowthCurve.ls )
 }

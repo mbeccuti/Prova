@@ -4,7 +4,6 @@
 #' makeCoeffs() function returns the data coefficients with respect to a base type chosen.
 #'
 #' @import fda
-#' @export
 makeCoeffs <- function(data, base=NULL, reg, dimBase, grid=NULL, pert){
   if(is.null(base)){
     time<-grid

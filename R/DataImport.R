@@ -10,7 +10,13 @@
 #'
 #' @return List with four arguments: (i) data frame reporting three variables (ID, data and time values), (ii) the vector reporting the number of observations collected per sample, (iii) the data frame with curves labeled according to target file features and (iv) the vector for overall time grid.
 #'
-#' @examples to write...
+#' @examples
+#'
+#' GrowDataFile<-"data/1864dataset.xls"
+#' AnnotationFile <-"data/1864info.txt"
+#'
+#' CONNECTORList <- DataImport(GrowDataFile,AnnotationFile)
+#'
 #' @import readxl
 #' @export
 DataImport <- function(file1,file2) {

@@ -1,26 +1,29 @@
 #' Time Grid Density
 #'
 #'@description
-#' TimeGridDensity() is a convenient function for controlling if the time grid is enough dense.
-#' It is possible to save the plot in a pdf specifying the path.
+#'Plots the grid of the time points at which the growth data are collected.
+#'Each point of the grid is colored with respect to its frequency in the input data.
 #'
-#'
-#' @param  alldata List containing the number of observations per each curve (called LenCurv), and a data frame constituted
-#'                from the curves' ID, observed values and the respective times.
-#'                It is generated automatically from the function DataImport().
-#' @param  save When TRUE (the default is FALSE), it is possible to save the plot in a pdf.
-#' @param  path	Path to save plot to (combined with filename).
+#' @param  data CONNECTORList.
+#' @param  save If TRUE it is saved in a pdf the density time grid plot.
+#' @param  path	Path to save plot to (combined with file name). If it is missing, the plot is saved in the working  directory.
 #' @return The time grid density plot as a ggplot object.
-#' @examples to write...
+#' @examples
+#' GrowDataFile<-"data/1864dataset.xls"
+#' AnnotationFile <-"data/1864info.txt"
+#'
+#' CONNECTORList <- DataImport(GrowDataFile,AnnotationFile)
+#' TimeGridDensity(CONNECTORList)
+#'
 #' @import ggplot2
 #' @export
-TimeGridDensity <- function(alldata,save=FALSE,path=NULL)
+TimeGridDensity <- function(data,save=FALSE,path=NULL)
 {
 
  ### Variables initialization
- TimeMeasure <-alldata$Dataset[,c(1,3)]
- SampleSize <- length(unique(alldata$Dataset[,1]))
- LenCurve <- alldata$LenCurv
+ TimeMeasure <-data$Dataset[,c(1,3)]
+ SampleSize <- length(unique(data$Dataset[,1]))
+ LenCurve <- data$LenCurv
  PointsCoord<-matrix(0,nrow =LenCurve%*%LenCurve,ncol = 2)
  k<-0
 
@@ -49,7 +52,7 @@ TimeGridDensity <- function(alldata,save=FALSE,path=NULL)
                    theme(plot.title = element_text(hjust = 0.5),title =element_text(size=12, face='bold'))
 
   if(save==TRUE)
-  { 
+  {
     if(is.null(path))
 	{
 	path <- getwd()
