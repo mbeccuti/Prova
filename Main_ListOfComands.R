@@ -9,7 +9,7 @@ CONNECTORList <- DataImport(GrowDataFile,AnnotationFile)
 
 ### Visualization
 DataVisualization(CONNECTORList,feature="Progeny",labels = c("time","volume","Tumor Growth"),save=TRUE,path="~/Desktop/ImagesPerFrancesca/")
-CONNECTORList<- DataTruncation(alldata=CONNECTORList,feature="Progeny",truncTime=60,save=TRUE,path="~/Desktop/ImagesPerFrancesca/",labels = c("time","volume","Tumor Growth"))
+CONNECTORList<- DataTruncation(CONNECTORList,feature="Progeny",truncTime=60,save=TRUE,path="~/Desktop/ImagesPerFrancesca/",labels = c("time","volume","Tumor Growth"))
 
 ### PCA
 pca <- PCA.Analysis(data.tr$Dataset,save=TRUE,path="~/Desktop/ImagesPerFrancesca/")
